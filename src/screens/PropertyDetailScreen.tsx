@@ -45,11 +45,11 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
   };
 
   const handleShare = () => {
-    console.log('Share functionality');
+    console.log('Share property:', propertyId);
   };
 
   const handleContact = () => {
-    console.log('Contact owner');
+    console.log('Contact owner for property:', propertyId);
   };
 
   return (
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.surface,
     padding: 16,
     borderRadius: 12,
-    marginTop: 24,
+    marginTop: 20,
     borderWidth: 1,
     borderColor: Colors.border,
   },
@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
   },
   contactButton: {
     backgroundColor: Colors.primary,
-    height: 50,
+    height: 54,
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
