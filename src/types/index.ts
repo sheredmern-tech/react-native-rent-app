@@ -35,6 +35,10 @@ export interface Property {
   hasParking: boolean;
   createdAt: Date;
   owner: Owner;
+  coordinate: {
+    latitude: number;
+    longitude: number;
+  };
 }
 
 export type PropertyType = 'apartment' | 'house' | 'villa' | 'all';
