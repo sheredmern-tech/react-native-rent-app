@@ -24,6 +24,14 @@ export const mockProperties: Property[] = [
     petFriendly: false,
     hasParking: true,
     createdAt: new Date('2025-11-01'),
+    owner: {
+      id: 'owner-1',
+      name: 'Budi Santoso',
+      phone: '+62 812-3456-7890',
+      email: 'budi.santoso@email.com',
+      responseTime: 'Within 1 hour',
+      verified: true,
+    },
   },
   {
     id: '2',
@@ -47,6 +55,14 @@ export const mockProperties: Property[] = [
     petFriendly: true,
     hasParking: true,
     createdAt: new Date('2025-10-25'),
+    owner: {
+      id: 'owner-2',
+      name: 'Made Wirawan',
+      phone: '+62 821-9876-5432',
+      email: 'made.wirawan@email.com',
+      responseTime: 'Within 2 hours',
+      verified: true,
+    },
   },
   {
     id: '3',
@@ -69,6 +85,14 @@ export const mockProperties: Property[] = [
     petFriendly: false,
     hasParking: true,
     createdAt: new Date('2025-11-08'),
+    owner: {
+      id: 'owner-3',
+      name: 'Siti Nurhaliza',
+      phone: '+62 813-5555-1234',
+      email: 'siti.nurhaliza@email.com',
+      responseTime: 'Within 30 minutes',
+      verified: true,
+    },
   },
   {
     id: '4',
@@ -92,6 +116,14 @@ export const mockProperties: Property[] = [
     petFriendly: true,
     hasParking: true,
     createdAt: new Date('2025-09-15'),
+    owner: {
+      id: 'owner-4',
+      name: 'Andi Wijaya',
+      phone: '+62 822-7777-8888',
+      email: 'andi.wijaya@email.com',
+      responseTime: 'Within 24 hours',
+      verified: false,
+    },
   },
   {
     id: '5',
@@ -116,6 +148,14 @@ export const mockProperties: Property[] = [
     petFriendly: false,
     hasParking: true,
     createdAt: new Date('2025-10-10'),
+    owner: {
+      id: 'owner-5',
+      name: 'Dewi Lestari',
+      phone: '+62 815-4321-9876',
+      email: 'dewi.lestari@email.com',
+      responseTime: 'Within 1 hour',
+      verified: true,
+    },
   },
   {
     id: '6',
@@ -139,6 +179,14 @@ export const mockProperties: Property[] = [
     petFriendly: true,
     hasParking: true,
     createdAt: new Date('2025-09-28'),
+    owner: {
+      id: 'owner-6',
+      name: 'I Ketut Sutama',
+      phone: '+62 816-2222-3333',
+      email: 'ketut.sutama@email.com',
+      responseTime: 'Within 3 hours',
+      verified: true,
+    },
   },
   {
     id: '7',
@@ -162,6 +210,14 @@ export const mockProperties: Property[] = [
     petFriendly: false,
     hasParking: true,
     createdAt: new Date('2025-10-18'),
+    owner: {
+      id: 'owner-7',
+      name: 'Rudi Hartono',
+      phone: '+62 817-6666-7777',
+      email: 'rudi.hartono@email.com',
+      responseTime: 'Within 2 hours',
+      verified: false,
+    },
   },
   {
     id: '8',
@@ -186,6 +242,14 @@ export const mockProperties: Property[] = [
     petFriendly: false,
     hasParking: true,
     createdAt: new Date('2025-08-20'),
+    owner: {
+      id: 'owner-8',
+      name: 'Nyoman Rai',
+      phone: '+62 818-9999-1111',
+      email: 'nyoman.rai@email.com',
+      responseTime: 'Within 24 hours',
+      verified: true,
+    },
   },
   {
     id: '9',
@@ -209,6 +273,14 @@ export const mockProperties: Property[] = [
     petFriendly: true,
     hasParking: true,
     createdAt: new Date('2025-10-05'),
+    owner: {
+      id: 'owner-9',
+      name: 'Taufik Rahman',
+      phone: '+62 819-4444-5555',
+      email: 'taufik.rahman@email.com',
+      responseTime: 'Within 1 hour',
+      verified: false,
+    },
   },
   {
     id: '10',
@@ -233,6 +305,14 @@ export const mockProperties: Property[] = [
     petFriendly: false,
     hasParking: true,
     createdAt: new Date('2025-09-10'),
+    owner: {
+      id: 'owner-10',
+      name: 'Rina Kusuma',
+      phone: '+62 811-3333-4444',
+      email: 'rina.kusuma@email.com',
+      responseTime: 'Within 30 minutes',
+      verified: true,
+    },
   },
   {
     id: '11',
@@ -255,6 +335,14 @@ export const mockProperties: Property[] = [
     petFriendly: true,
     hasParking: false,
     createdAt: new Date('2025-11-05'),
+    owner: {
+      id: 'owner-11',
+      name: 'Agus Setiawan',
+      phone: '+62 823-1111-2222',
+      email: 'agus.setiawan@email.com',
+      responseTime: 'Within 4 hours',
+      verified: false,
+    },
   },
   {
     id: '12',
@@ -278,5 +366,13 @@ export const mockProperties: Property[] = [
     petFriendly: true,
     hasParking: true,
     createdAt: new Date('2025-10-30'),
+    owner: {
+      id: 'owner-12',
+      name: 'Wayan Sujana',
+      phone: '+62 814-8888-9999',
+      email: 'wayan.sujana@email.com',
+      responseTime: 'Within 1 hour',
+      verified: true,
+    },
   },
 ];

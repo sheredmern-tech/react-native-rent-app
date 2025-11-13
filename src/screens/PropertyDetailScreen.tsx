@@ -14,7 +14,7 @@ import { RootStackNavigationProp, RootStackRouteProp } from '../types';
 import { Colors, Fonts } from '../constants';
 import { mockProperties } from '../data';
 import { useFavorites } from '../context/FavoritesContext';
-import { ImageCarousel, ImageThumbnailGrid, ImageViewerModal } from '../components';
+import { ImageCarousel, ImageThumbnailGrid, ImageViewerModal, OwnerCard, ContactOwnerModal } from '../components';
 
 type PropertyDetailScreenProps = {
   navigation: RootStackNavigationProp<'PropertyDetail'>;
@@ -31,6 +31,7 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
   const heartScaleAnim = useRef(new Animated.Value(1)).current;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [fullscreenVisible, setFullscreenVisible] = useState(false);
+  const [contactModalVisible, setContactModalVisible] = useState(false);
 
   if (!property) {
     return (
@@ -55,7 +56,7 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
   };
 
   const handleContact = () => {
-    console.log('Contact owner for property:', propertyId);
+    setContactModalVisible(true);
   };
 
   const handleToggleFavorite = () => {
@@ -273,6 +274,12 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
             </View>
           )}
 
+          {/* Owner Information */}
+          <View style={styles.section}>
+            <Text style={styles.sectionHeading}>Property Owner</Text>
+            <OwnerCard owner={property.owner} onContactPress={handleContact} />
+          </View>
+
           {/* Bottom Padding */}
           <View style={styles.bottomPadding} />
         </View>
@@ -295,6 +302,13 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
         images={property.imageUrls}
         initialIndex={currentImageIndex}
         onClose={() => setFullscreenVisible(false)}
+      />
+
+      {/* Contact Owner Modal */}
+      <ContactOwnerModal
+        visible={contactModalVisible}
+        property={property}
+        onClose={() => setContactModalVisible(false)}
       />
     </View>
   );
