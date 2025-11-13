@@ -4,6 +4,7 @@ import { RouteProp } from '@react-navigation/native';
 export type RootStackParamList = {
   Home: undefined;
   PropertyDetail: { propertyId: string };
+  Search: undefined;
 };
 
 export type RootStackNavigationProp<T extends keyof RootStackParamList> =

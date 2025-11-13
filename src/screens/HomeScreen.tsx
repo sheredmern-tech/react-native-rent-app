@@ -5,8 +5,10 @@ import {
   StyleSheet,
   FlatList,
   RefreshControl,
+  TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { RootStackNavigationProp } from '../types';
 import { Colors, Fonts } from '../constants';
 import { PropertyCard } from '../components';
@@ -33,10 +35,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const renderHeader = () => (
     <View style={styles.headerContainer}>
-      <Text style={styles.title}>Find Your Dream Home</Text>
-      <Text style={styles.subtitle}>
-        Explore the best properties in Indonesia
-      </Text>
+      <View style={styles.headerRow}>
+        <View style={styles.headerTextContainer}>
+          <Text style={styles.title}>Find Your Dream Home</Text>
+          <Text style={styles.subtitle}>
+            Explore the best properties in Indonesia
+          </Text>
+        </View>
+        <TouchableOpacity
+          style={styles.searchButton}
+          onPress={() => navigation.navigate('Search')}
+        >
+          <Ionicons name="search-outline" size={24} color={Colors.primary} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
@@ -80,6 +92,15 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 24,
   },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+  },
+  headerTextContainer: {
+    flex: 1,
+    marginRight: 16,
+  },
   title: {
     fontSize: 28,
     fontWeight: Fonts.weight.bold,
@@ -90,5 +111,13 @@ const styles = StyleSheet.create({
     fontSize: Fonts.size.md,
     fontWeight: Fonts.weight.regular,
     color: Colors.text.secondary,
+  },
+  searchButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: Colors.surface,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
