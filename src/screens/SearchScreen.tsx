@@ -13,7 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackNavigationProp, PropertyType, Property } from '../types';
 import { Colors, Fonts } from '../constants';
-import { SearchBar, FilterButton, PropertyCard } from '../components';
+import { SearchBar, FilterButton, PropertyCard, EmptyState } from '../components';
 import { mockProperties } from '../data';
 
 type SearchScreenProps = {
@@ -84,6 +84,23 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
   const handlePropertyPress = (propertyId: string) => {
     navigation.navigate('PropertyDetail', { propertyId });
   };
+
+  const handleClearFilters = () => {
+    setSearchQuery('');
+    setSelectedType('all');
+    setMinPrice('');
+    setMaxPrice('');
+    setSelectedBedrooms('Any');
+    setAvailableOnly(false);
+  };
+
+  const hasActiveFilters =
+    searchQuery ||
+    selectedType !== 'all' ||
+    minPrice ||
+    maxPrice ||
+    selectedBedrooms !== 'Any' ||
+    availableOnly;
 
   const formatPriceInput = (value: string) => {
     // Remove non-numeric characters
@@ -239,6 +256,15 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
         <Text style={styles.resultsCount}>
           {filteredProperties.length} {filteredProperties.length === 1 ? 'property' : 'properties'} found
         </Text>
+        {hasActiveFilters && (
+          <TouchableOpacity
+            onPress={handleClearFilters}
+            style={styles.clearButton}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.clearButtonText}>Clear All</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -248,25 +274,22 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
       <FlatList
         data={filteredProperties}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <PropertyCard
             property={item}
             onPress={() => handlePropertyPress(item.id)}
+            index={index}
           />
         )}
         ListHeaderComponent={renderHeader}
         ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <Ionicons
-              name="search-outline"
-              size={64}
-              color={Colors.text.disabled}
-            />
-            <Text style={styles.emptyText}>No properties found</Text>
-            <Text style={styles.emptySubtext}>
-              Try adjusting your search filters
-            </Text>
-          </View>
+          <EmptyState
+            icon="search-outline"
+            title="No Properties Found"
+            message="Try adjusting your search filters"
+            actionLabel={hasActiveFilters ? 'Clear Filters' : undefined}
+            onAction={hasActiveFilters ? handleClearFilters : undefined}
+          />
         }
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
@@ -355,6 +378,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   resultsHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginTop: 24,
     marginBottom: 16,
   },
@@ -363,22 +389,15 @@ const styles = StyleSheet.create({
     fontWeight: Fonts.weight.semiBold,
     color: Colors.text.primary,
   },
-  emptyContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 60,
-    paddingHorizontal: 32,
+  clearButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    backgroundColor: Colors.gray[100],
+    borderRadius: 8,
   },
-  emptyText: {
-    fontSize: Fonts.size.lg,
+  clearButtonText: {
+    fontSize: Fonts.size.sm,
     fontWeight: Fonts.weight.semiBold,
-    color: Colors.text.primary,
-    marginTop: 16,
-  },
-  emptySubtext: {
-    fontSize: Fonts.size.md,
-    color: Colors.text.secondary,
-    marginTop: 8,
-    textAlign: 'center',
+    color: Colors.primary,
   },
 });

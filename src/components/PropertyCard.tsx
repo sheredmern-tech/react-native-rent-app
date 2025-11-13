@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -6,33 +6,51 @@ import {
   StyleSheet,
   TouchableOpacity,
   Animated,
+  ActivityIndicator,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { Property } from '../types';
-import { Colors, Fonts } from '../constants';
+import { Colors, Fonts, Animations } from '../constants';
 
 interface PropertyCardProps {
   property: Property;
   onPress: () => void;
+  index?: number;
 }
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({
   property,
   onPress,
+  index = 0,
 }) => {
-  const scaleAnim = React.useRef(new Animated.Value(1)).current;
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const [imageLoading, setImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
+
+  useEffect(() => {
+    // Fade in animation with stagger
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: Animations.duration.normal,
+      delay: index * 50, // Stagger animation
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   const handlePressIn = () => {
     Animated.spring(scaleAnim, {
-      toValue: 0.97,
+      toValue: Animations.scale.press,
+      ...Animations.spring.default,
       useNativeDriver: true,
     }).start();
   };
 
   const handlePressOut = () => {
     Animated.spring(scaleAnim, {
-      toValue: 1,
+      toValue: Animations.scale.active,
+      ...Animations.spring.default,
       useNativeDriver: true,
     }).start();
   };
@@ -46,7 +64,15 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
     (property.features?.length || 0) - visibleFeatures.length;
 
   return (
-    <Animated.View style={[styles.container, { transform: [{ scale: scaleAnim }] }]}>
+    <Animated.View
+      style={[
+        styles.container,
+        {
+          opacity: fadeAnim,
+          transform: [{ scale: scaleAnim }],
+        },
+      ]}
+    >
       <TouchableOpacity
         activeOpacity={0.9}
         onPress={onPress}
@@ -55,11 +81,34 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
       >
         {/* Image Section */}
         <View style={styles.imageContainer}>
-          <Image
-            source={{ uri: property.imageUrl }}
-            style={styles.image}
-            resizeMode="cover"
-          />
+          {!imageError ? (
+            <>
+              <Image
+                source={{ uri: property.imageUrl }}
+                style={styles.image}
+                resizeMode="cover"
+                onLoadStart={() => setImageLoading(true)}
+                onLoadEnd={() => setImageLoading(false)}
+                onError={() => {
+                  setImageLoading(false);
+                  setImageError(true);
+                }}
+              />
+              {imageLoading && (
+                <View style={styles.imageLoadingContainer}>
+                  <ActivityIndicator size="small" color={Colors.primary} />
+                </View>
+              )}
+            </>
+          ) : (
+            <View style={styles.imageErrorContainer}>
+              <Ionicons
+                name="image-outline"
+                size={40}
+                color={Colors.text.disabled}
+              />
+            </View>
+          )}
 
           {/* Gradient Overlay */}
           <LinearGradient
@@ -172,16 +221,38 @@ const styles = StyleSheet.create({
       height: 2,
     },
     shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
+    shadowRadius: 4,
+    elevation: 4,
   },
   imageContainer: {
     position: 'relative',
     height: 200,
+    backgroundColor: Colors.surface,
   },
   image: {
     width: '100%',
     height: '100%',
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+  },
+  imageLoadingContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.surface,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+  },
+  imageErrorContainer: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.gray[100],
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
   },
