@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Switch, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Colors, Fonts } from '../constants';
+import { Fonts } from '../constants';
 import { useUser } from '../context/UserContext';
-import { SettingItem } from '../components/SettingItem';
+import { useTheme } from '../context/ThemeContext';
+import { SettingItem, ThemeToggle } from '../components';
 
 export const SettingsScreen: React.FC = () => {
   const { settings, updateSettings } = useUser();
+  const { colors } = useTheme();
 
   const handlePushNotifications = () => {
     updateSettings({
@@ -106,15 +108,6 @@ export const SettingsScreen: React.FC = () => {
     );
   };
 
-  const handleDarkMode = () => {
-    updateSettings({
-      ...settings,
-      darkMode: !settings.darkMode,
-    });
-    if (!settings.darkMode) {
-      Alert.alert('Coming Soon', 'Dark mode will be available in the next update!');
-    }
-  };
 
   const handleClearCache = () => {
     Alert.alert(
@@ -145,15 +138,15 @@ export const SettingsScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
       <ScrollView
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
       >
         {/* Notifications Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>NOTIFICATIONS</Text>
-          <View style={styles.sectionContent}>
+          <Text style={[styles.sectionTitle, { color: colors.text.secondary }]}>NOTIFICATIONS</Text>
+          <View style={[styles.sectionContent, { backgroundColor: colors.surface, borderColor: colors.border }]}>
             <SettingItem
               icon="notifications-outline"
               label="Push Notifications"
@@ -161,8 +154,8 @@ export const SettingsScreen: React.FC = () => {
                 <Switch
                   value={settings.notifications.push}
                   onValueChange={handlePushNotifications}
-                  trackColor={{ false: Colors.border, true: Colors.primary }}
-                  thumbColor={Colors.surface}
+                  trackColor={{ false: colors.border, true: colors.primary }}
+                  thumbColor={colors.white}
                 />
               }
             />
@@ -173,8 +166,8 @@ export const SettingsScreen: React.FC = () => {
                 <Switch
                   value={settings.notifications.email}
                   onValueChange={handleEmailNotifications}
-                  trackColor={{ false: Colors.border, true: Colors.primary }}
-                  thumbColor={Colors.surface}
+                  trackColor={{ false: colors.border, true: colors.primary }}
+                  thumbColor={colors.white}
                 />
               }
             />
@@ -183,8 +176,8 @@ export const SettingsScreen: React.FC = () => {
 
         {/* Preferences Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>PREFERENCES</Text>
-          <View style={styles.sectionContent}>
+          <Text style={[styles.sectionTitle, { color: colors.text.secondary }]}>PREFERENCES</Text>
+          <View style={[styles.sectionContent, { backgroundColor: colors.surface, borderColor: colors.border }]}>
             <SettingItem
               icon="language-outline"
               label="Language"
@@ -206,22 +199,16 @@ export const SettingsScreen: React.FC = () => {
           </View>
         </View>
 
+        {/* Appearance Section */}
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.text.secondary }]}>APPEARANCE</Text>
+          <ThemeToggle />
+        </View>
+
         {/* App Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>APP</Text>
-          <View style={styles.sectionContent}>
-            <SettingItem
-              icon="moon-outline"
-              label="Dark Mode"
-              rightComponent={
-                <Switch
-                  value={settings.darkMode}
-                  onValueChange={handleDarkMode}
-                  trackColor={{ false: Colors.border, true: Colors.primary }}
-                  thumbColor={Colors.surface}
-                />
-              }
-            />
+          <Text style={[styles.sectionTitle, { color: colors.text.secondary }]}>APP</Text>
+          <View style={[styles.sectionContent, { backgroundColor: colors.surface, borderColor: colors.border }]}>
             <SettingItem
               icon="trash-outline"
               label="Cache Size"
@@ -245,7 +232,6 @@ export const SettingsScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
   },
   scrollView: {
     flex: 1,
@@ -257,17 +243,14 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 12,
     fontFamily: Fonts.family.semiBold,
-    color: Colors.text.secondary,
     letterSpacing: 0.5,
     marginBottom: 8,
     marginLeft: 4,
   },
   sectionContent: {
-    backgroundColor: Colors.surface,
     borderRadius: 12,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: Colors.border,
   },
   bottomSpacing: {
     height: 32,

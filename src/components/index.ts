@@ -37,3 +37,4 @@ export { RecentViewCard } from './RecentViewCard';
 export { RecentViewsSection } from './RecentViewsSection';
 export { ShareButton } from './ShareButton';
 export { ShareModal } from './ShareModal';
+export { ThemeToggle } from './ThemeToggle';

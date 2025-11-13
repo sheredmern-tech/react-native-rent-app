@@ -1,4 +1,6 @@
-export const Colors = {
+import { ColorScheme } from '../types/theme';
+
+export const lightColors: ColorScheme = {
   primary: '#007AFF',
   secondary: '#5856D6',
   success: '#34C759',
@@ -40,5 +42,49 @@ export const Colors = {
   },
 };
 
+export const darkColors: ColorScheme = {
+  primary: '#0A84FF',
+  secondary: '#5E5CE6',
+  success: '#32D74B',
+  warning: '#FF9F0A',
+  danger: '#FF453A',
+  info: '#64D2FF',
+
+  background: '#000000',
+  surface: '#1C1C1E',
+  card: '#2C2C2E',
+
+  text: {
+    primary: '#FFFFFF',
+    secondary: '#EBEBF5',
+    disabled: '#8E8E93',
+    inverse: '#000000',
+  },
+
+  textPrimary: '#FFFFFF',
+  textSecondary: '#EBEBF5',
+  textLight: '#8E8E93',
+
+  border: '#38383A',
+  divider: '#48484A',
+
+  white: '#FFFFFF',
+  black: '#000000',
+
+  gray: {
+    100: '#1C1C1E',
+    200: '#2C2C2E',
+    300: '#3A3A3C',
+    400: '#48484A',
+    500: '#636366',
+    600: '#8E8E93',
+    700: '#AEAEB2',
+    800: '#C6C6C8',
+    900: '#E5E5EA',
+  },
+};
+
+// Default export for backward compatibility
+export const Colors = lightColors;
 export const COLORS = Colors;
 export type ColorType = typeof Colors;
