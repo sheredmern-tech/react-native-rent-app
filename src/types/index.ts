@@ -1,5 +1,22 @@
 export * from './navigation';
 
+export interface Owner {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  avatar?: string;
+  responseTime: string;
+  verified: boolean;
+}
+
+export interface ContactFormData {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
 export interface Property {
   id: string;
   title: string;
@@ -17,6 +34,7 @@ export interface Property {
   petFriendly: boolean;
   hasParking: boolean;
   createdAt: Date;
+  owner: Owner;
 }
 
 export type PropertyType = 'apartment' | 'house' | 'villa' | 'all';

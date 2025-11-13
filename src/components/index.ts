@@ -8,3 +8,6 @@ export { FilterChip } from './FilterChip';
 export { ImageCarousel } from './ImageCarousel';
 export { ImageThumbnailGrid } from './ImageThumbnailGrid';
 export { ImageViewerModal } from './ImageViewerModal';
+export { ContactMethodButton } from './ContactMethodButton';
+export { ContactOwnerModal } from './ContactOwnerModal';
+export { OwnerCard } from './OwnerCard';
