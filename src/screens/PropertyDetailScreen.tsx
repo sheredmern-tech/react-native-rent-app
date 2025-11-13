@@ -6,16 +6,22 @@ import {
   ScrollView,
   TouchableOpacity,
   Animated,
+  Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { RootStackNavigationProp, RootStackRouteProp } from '../types';
 import { Colors, Fonts } from '../constants';
 import { mockProperties } from '../data';
 import { useFavorites } from '../context/FavoritesContext';
 import { useComparison } from '../context/ComparisonContext';
+import { useLocation } from '../context/LocationContext';
 import { ImageCarousel, ImageThumbnailGrid, ImageViewerModal, OwnerCard, ContactOwnerModal } from '../components';
+import { calculateDistance, formatDistance } from '../utils/locationHelpers';
+
+const { width } = Dimensions.get('window');
 
 type PropertyDetailScreenProps = {
   navigation: RootStackNavigationProp<'PropertyDetail'>;
@@ -26,8 +32,8 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
   navigation,
   route,
 }) => {
-  const { propertyId } = route.params;
-  const property = mockProperties.find((p) => p.id === propertyId);
+  const { property } = route.params;
+  const { userLocation } = useLocation();
   const { isFavorite, toggleFavorite } = useFavorites();
   const { isInComparison, addToComparison, removeFromComparison } =
     useComparison();
@@ -55,7 +61,7 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
   };
 
   const handleShare = () => {
-    console.log('Share property:', propertyId);
+    console.log('Share property:', property.id);
   };
 
   const handleContact = () => {
@@ -63,8 +69,8 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
   };
 
   const handleToggleFavorite = () => {
-    toggleFavorite(propertyId);
-    const favorited = isFavorite(propertyId);
+    toggleFavorite(property.id);
+    const favorited = isFavorite(property.id);
     console.log(favorited ? 'Removed from favorites' : 'Added to favorites');
 
     // Animate heart
@@ -83,15 +89,25 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
   const handleToggleComparison = () => {
     if (!property) return;
 
-    if (isInComparison(propertyId)) {
-      removeFromComparison(propertyId);
+    if (isInComparison(property.id)) {
+      removeFromComparison(property.id);
     } else {
       addToComparison(property);
     }
   };
 
-  const favorited = isFavorite(propertyId);
-  const inComparison = property ? isInComparison(propertyId) : false;
+  const favorited = isFavorite(property.id);
+  const inComparison = property ? isInComparison(property.id) : false;
+
+  // Calculate distance from user location
+  const distance = userLocation
+    ? calculateDistance(
+        userLocation.latitude,
+        userLocation.longitude,
+        property.latitude,
+        property.longitude
+      )
+    : null;
 
   const handleImagePress = (index: number) => {
     setCurrentImageIndex(index);
@@ -300,6 +316,55 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
               </View>
             </View>
           )}
+
+          {/* Location Map */}
+          <View style={styles.section}>
+            <View style={styles.mapHeader}>
+              <Text style={styles.sectionHeading}>Lokasi</Text>
+              {distance !== null && (
+                <View style={styles.distanceBadge}>
+                  <Ionicons name="location" size={16} color={Colors.primary} />
+                  <Text style={styles.distanceText}>{formatDistance(distance)}</Text>
+                </View>
+              )}
+            </View>
+            <TouchableOpacity
+              style={styles.mapContainer}
+              onPress={() => navigation.navigate('Map')}
+              activeOpacity={0.9}
+            >
+              <MapView
+                provider={PROVIDER_GOOGLE}
+                style={styles.map}
+                initialRegion={{
+                  latitude: property.latitude,
+                  longitude: property.longitude,
+                  latitudeDelta: 0.01,
+                  longitudeDelta: 0.01,
+                }}
+                scrollEnabled={false}
+                zoomEnabled={false}
+                rotateEnabled={false}
+                pitchEnabled={false}
+              >
+                <Marker
+                  coordinate={{
+                    latitude: property.latitude,
+                    longitude: property.longitude,
+                  }}
+                  title={property.title}
+                />
+              </MapView>
+              <View style={styles.mapOverlay}>
+                <Ionicons name="expand-outline" size={24} color={Colors.white} />
+                <Text style={styles.mapOverlayText}>Lihat di Peta</Text>
+              </View>
+            </TouchableOpacity>
+            <View style={styles.addressContainer}>
+              <Ionicons name="location-outline" size={20} color={Colors.text.secondary} />
+              <Text style={styles.addressText}>{property.location}</Text>
+            </View>
+          </View>
 
           {/* Owner Information */}
           <View style={styles.section}>
@@ -590,5 +655,68 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: Fonts.size.lg,
     fontWeight: Fonts.weight.bold,
+  },
+  mapHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  distanceBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: `${Colors.primary}15`,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 12,
+    gap: 4,
+  },
+  distanceText: {
+    fontSize: 14,
+    fontWeight: Fonts.weight.semiBold,
+    color: Colors.primary,
+  },
+  mapContainer: {
+    height: 200,
+    borderRadius: 12,
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  map: {
+    width: '100%',
+    height: '100%',
+  },
+  mapOverlay: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  mapOverlayText: {
+    color: Colors.white,
+    fontSize: 14,
+    fontWeight: Fonts.weight.semiBold,
+  },
+  addressContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 8,
+    marginTop: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    backgroundColor: Colors.surface,
+    borderRadius: 12,
+  },
+  addressText: {
+    flex: 1,
+    fontSize: 14,
+    lineHeight: 20,
+    color: Colors.text.secondary,
   },
 });
