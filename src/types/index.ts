@@ -35,15 +35,13 @@ export interface Property {
   hasParking: boolean;
   createdAt: Date;
   owner: Owner;
-  coordinate: {
-    latitude: number;
-    longitude: number;
-  };
+  latitude: number;
+  longitude: number;
 }
 
 export type PropertyType = 'apartment' | 'house' | 'villa' | 'all';
 
-export type SortOption = 'newest' | 'price-low' | 'price-high' | 'area-small' | 'area-large';
+export type SortOption = 'newest' | 'price-low' | 'price-high' | 'area-small' | 'area-large' | 'distance';
 
 export interface SearchFilters {
   searchQuery: string;

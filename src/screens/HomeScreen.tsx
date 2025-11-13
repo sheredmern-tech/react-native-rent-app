@@ -53,8 +53,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     }, 1000);
   };
 
-  const handlePropertyPress = (propertyId: string) => {
-    navigation.navigate('PropertyDetail', { propertyId });
+  const handlePropertyPress = (property: typeof mockProperties[0]) => {
+    navigation.navigate('PropertyDetail', { property });
   };
 
   const renderHeader = () => (
@@ -79,6 +79,13 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
         {/* Action Buttons - Right Side */}
         <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => navigation.navigate('Map')}
+            activeOpacity={0.7}
+          >
+            <Ionicons name="map-outline" size={24} color={Colors.primary} />
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.iconButton}
             onPress={() => navigation.navigate('Favorites')}
@@ -133,7 +140,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         renderItem={({ item, index }) => (
           <PropertyCard
             property={item}
-            onPress={() => handlePropertyPress(item.id)}
+            onPress={() => handlePropertyPress(item)}
             index={index}
           />
         )}

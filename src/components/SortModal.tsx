@@ -19,11 +19,12 @@ interface SortModalProps {
 }
 
 const SORT_OPTIONS: { value: SortOption; label: string; icon: keyof typeof Ionicons.glyphMap }[] = [
-  { value: 'newest', label: 'Newest First', icon: 'time-outline' },
-  { value: 'price-low', label: 'Price: Low to High', icon: 'arrow-up-outline' },
-  { value: 'price-high', label: 'Price: High to Low', icon: 'arrow-down-outline' },
-  { value: 'area-small', label: 'Area: Smallest First', icon: 'resize-outline' },
-  { value: 'area-large', label: 'Area: Largest First', icon: 'expand-outline' },
+  { value: 'newest', label: 'Terbaru', icon: 'time-outline' },
+  { value: 'price-low', label: 'Harga: Terendah', icon: 'arrow-up-outline' },
+  { value: 'price-high', label: 'Harga: Tertinggi', icon: 'arrow-down-outline' },
+  { value: 'area-small', label: 'Luas: Terkecil', icon: 'resize-outline' },
+  { value: 'area-large', label: 'Luas: Terbesar', icon: 'expand-outline' },
+  { value: 'distance', label: 'Jarak: Terdekat', icon: 'location-outline' },
 ];
 
 export const SortModal: React.FC<SortModalProps> = ({
@@ -47,7 +48,7 @@ export const SortModal: React.FC<SortModalProps> = ({
       <Pressable style={styles.backdrop} onPress={onClose}>
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.title}>Sort By</Text>
+            <Text style={styles.title}>Urutkan Berdasarkan</Text>
             <TouchableOpacity onPress={onClose} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
               <Ionicons name="close" size={24} color={Colors.text.primary} />
             </TouchableOpacity>

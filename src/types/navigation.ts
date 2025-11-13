@@ -1,9 +1,10 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import { Property } from './index';
 
 export type RootStackParamList = {
   Home: undefined;
-  PropertyDetail: { propertyId: string };
+  PropertyDetail: { property: Property };
   Search: undefined;
   Favorites: undefined;
   Profile: undefined;
@@ -13,6 +14,8 @@ export type RootStackParamList = {
   Terms: undefined;
   Privacy: undefined;
   Comparison: undefined;
+  Map: undefined;
+  NearbyProperties: undefined;
 };
 
 export type RootStackNavigationProp<T extends keyof RootStackParamList> =

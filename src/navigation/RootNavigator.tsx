@@ -13,6 +13,8 @@ import {
   TermsScreen,
   PrivacyScreen,
   ComparisonScreen,
+  MapScreen,
+  NearbyPropertiesScreen,
 } from '../screens';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -80,6 +82,16 @@ export const RootNavigator: React.FC = () => {
         name="Comparison"
         component={ComparisonScreen}
         options={{ title: 'Bandingkan Properti' }}
+      />
+      <Stack.Screen
+        name="Map"
+        component={MapScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NearbyProperties"
+        component={NearbyPropertiesScreen}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

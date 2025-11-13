@@ -9,3 +9,5 @@ export { AboutScreen } from './AboutScreen';
 export { TermsScreen } from './TermsScreen';
 export { PrivacyScreen } from './PrivacyScreen';
 export { ComparisonScreen } from './ComparisonScreen';
+export { MapScreen } from './MapScreen';
+export { NearbyPropertiesScreen } from './NearbyPropertiesScreen';

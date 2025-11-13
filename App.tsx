@@ -6,6 +6,7 @@ import { RootNavigator } from './src/navigation';
 import { FavoritesProvider } from './src/context/FavoritesContext';
 import { UserProvider } from './src/context/UserContext';
 import { ComparisonProvider } from './src/context/ComparisonContext';
+import { LocationProvider } from './src/context/LocationContext';
 
 export default function App() {
   return (
@@ -13,10 +14,12 @@ export default function App() {
       <UserProvider>
         <FavoritesProvider>
           <ComparisonProvider>
-            <NavigationContainer>
-              <RootNavigator />
-              <StatusBar style="auto" />
-            </NavigationContainer>
+            <LocationProvider>
+              <NavigationContainer>
+                <RootNavigator />
+                <StatusBar style="auto" />
+              </NavigationContainer>
+            </LocationProvider>
           </ComparisonProvider>
         </FavoritesProvider>
       </UserProvider>

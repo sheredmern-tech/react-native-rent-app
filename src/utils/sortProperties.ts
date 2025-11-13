@@ -1,8 +1,10 @@
 import { Property, SortOption } from '../types';
+import { calculateDistance } from './locationHelpers';
 
 export const sortProperties = (
   properties: Property[],
-  sortOption: SortOption
+  sortOption: SortOption,
+  userLocation?: { latitude: number; longitude: number } | null
 ): Property[] => {
   const sorted = [...properties];
 
@@ -24,6 +26,24 @@ export const sortProperties = (
     case 'area-large':
       return sorted.sort((a, b) => b.area - a.area);
 
+    case 'distance':
+      if (!userLocation) return sorted;
+      return sorted.sort((a, b) => {
+        const distanceA = calculateDistance(
+          userLocation.latitude,
+          userLocation.longitude,
+          a.latitude,
+          a.longitude
+        );
+        const distanceB = calculateDistance(
+          userLocation.latitude,
+          userLocation.longitude,
+          b.latitude,
+          b.longitude
+        );
+        return distanceA - distanceB;
+      });
+
     default:
       return sorted;
   }
@@ -32,16 +52,18 @@ export const sortProperties = (
 export const getSortLabel = (sortOption: SortOption): string => {
   switch (sortOption) {
     case 'newest':
-      return 'Newest First';
+      return 'Terbaru';
     case 'price-low':
-      return 'Price: Low to High';
+      return 'Harga: Terendah';
     case 'price-high':
-      return 'Price: High to Low';
+      return 'Harga: Tertinggi';
     case 'area-small':
-      return 'Area: Smallest';
+      return 'Luas: Terkecil';
     case 'area-large':
-      return 'Area: Largest';
+      return 'Luas: Terbesar';
+    case 'distance':
+      return 'Jarak: Terdekat';
     default:
-      return 'Sort';
+      return 'Urutkan';
   }
 };

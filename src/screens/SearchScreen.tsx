@@ -24,6 +24,7 @@ import { Colors, Fonts } from '../constants';
 import { SearchBar, FilterButton, PropertyCard, EmptyState, SortModal, FilterChip, ComparisonButton } from '../components';
 import { mockProperties } from '../data';
 import { sortProperties, getSortLabel } from '../utils/sortProperties';
+import { useLocation } from '../context/LocationContext';
 
 type SearchScreenProps = {
   navigation: RootStackNavigationProp<'Search'>;
@@ -68,6 +69,7 @@ const FILTER_PRESETS: FilterPreset[] = [
 ];
 
 export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
+  const { userLocation } = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState<PropertyType>('all');
   const [minPrice, setMinPrice] = useState('');
@@ -149,7 +151,7 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
     });
 
     // Apply sorting
-    return sortProperties(filtered, sortOption);
+    return sortProperties(filtered, sortOption, userLocation);
   }, [
     searchQuery,
     selectedType,
@@ -161,10 +163,11 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
     petFriendly,
     hasParking,
     sortOption,
+    userLocation,
   ]);
 
-  const handlePropertyPress = (propertyId: string) => {
-    navigation.navigate('PropertyDetail', { propertyId });
+  const handlePropertyPress = (property: Property) => {
+    navigation.navigate('PropertyDetail', { property });
   };
 
   const handleClearFilters = () => {
@@ -534,7 +537,7 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
         renderItem={({ item, index }) => (
           <PropertyCard
             property={item}
-            onPress={() => handlePropertyPress(item.id)}
+            onPress={() => handlePropertyPress(item)}
             index={index}
           />
         )}

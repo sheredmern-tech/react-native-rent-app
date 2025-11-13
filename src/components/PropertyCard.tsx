@@ -14,6 +14,8 @@ import { Property } from '../types';
 import { Colors, Fonts, Animations } from '../constants';
 import { useFavorites } from '../context/FavoritesContext';
 import { useComparison } from '../context/ComparisonContext';
+import { useLocation } from '../context/LocationContext';
+import { calculateDistance, formatDistance } from '../utils/locationHelpers';
 
 interface PropertyCardProps {
   property: Property;
@@ -34,6 +36,17 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
   const { isFavorite, toggleFavorite } = useFavorites();
   const { isInComparison, addToComparison, removeFromComparison, canAddMore } =
     useComparison();
+  const { userLocation } = useLocation();
+
+  // Calculate distance from user location
+  const distance = userLocation
+    ? calculateDistance(
+        userLocation.latitude,
+        userLocation.longitude,
+        property.latitude,
+        property.longitude
+      )
+    : null;
 
   useEffect(() => {
     // Fade in animation with stagger
@@ -171,6 +184,16 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
               {property.isAvailable ? 'AVAILABLE' : 'RENTED'}
             </Text>
           </View>
+
+          {/* Distance Badge */}
+          {distance !== null && (
+            <View style={styles.distanceBadge}>
+              <Ionicons name="location" size={12} color="white" />
+              <Text style={styles.distanceBadgeText}>
+                {formatDistance(distance)}
+              </Text>
+            </View>
+          )}
 
           {/* Favorite Heart Button */}
           <TouchableOpacity
@@ -394,6 +417,23 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: Fonts.weight.bold,
     letterSpacing: 0.5,
+  },
+  distanceBadge: {
+    position: 'absolute',
+    top: 44,
+    right: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    backgroundColor: 'rgba(0, 122, 255, 0.9)',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  distanceBadgeText: {
+    color: Colors.white,
+    fontSize: 10,
+    fontWeight: Fonts.weight.bold,
   },
   heartButton: {
     position: 'absolute',

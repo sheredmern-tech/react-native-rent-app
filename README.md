@@ -1,96 +1,77 @@
-I'm continuing development of a React Native Expo rental property app.
+# React Native Rent App
 
-PROJECT INFO:
-- Location: D:/REACT-NATIVE
-- Git repo: https://github.com/sheredmern-tech/react-native-rent-app
-- Branch: main (all features merged)
-- Package manager: npm
-- Node modules: Already installed
+A React Native Expo application built with TypeScript for managing rental properties.
 
-COMPLETED FEATURES (Steps 1-10):
-✅ Step 1-2: Project setup with TypeScript, React Navigation, types, constants
-✅ Step 3: PropertyCard component with images, badges, animations
-✅ Step 4: HomeScreen with FlatList, pull-to-refresh, dynamic greeting
-✅ Step 5: PropertyDetailScreen with full details, image carousel
-✅ Step 6: SearchScreen with filters (type, price, bedrooms, availability)
-✅ Step 7: Favorites/Wishlist with FavoritesContext
-✅ Step 8: Advanced sorting & enhanced filters (furnished, pet-friendly, parking, presets)
-✅ Step 9: Property image gallery (multiple images, carousel, thumbnails, fullscreen viewer)
-✅ Step 10: Contact Owner modal with form validation, quick actions (WhatsApp, Call, Email)
+## Tech Stack
 
-Folder map of d:\REACT-NATIVE\src
-├── components/
-│   ├── ContactMethodButton.tsx
-│   ├── ContactOwnerModal.tsx
-│   ├── EmptyState.tsx
-│   ├── FilterButton.tsx
-│   ├── FilterChip.tsx
-│   ├── ImageCarousel.tsx
-│   ├── ImageThumbnailGrid.tsx
-│   ├── ImageViewerModal.tsx
-│   ├── index.ts
-│   ├── LoadingSpinner.tsx
-│   ├── OwnerCard.tsx
-│   ├── PropertyCard.tsx
-│   ├── SearchBar.tsx
-│   └── SortModal.tsx
-├── constants/
-│   ├── animations.ts
-│   ├── colors.ts
-│   ├── fonts.ts
-│   └── index.ts
-├── context/
-│   └── FavoritesContext.tsx
-├── data/
-│   ├── index.ts
-│   └── mockProperties.ts
-├── navigation/
-│   ├── index.ts
-│   └── RootNavigator.tsx
-├── screens/
-│   ├── FavoritesScreen.tsx
-│   ├── HomeScreen.tsx
-│   ├── index.ts
-│   ├── PropertyDetailScreen.tsx
-│   └── SearchScreen.tsx
-├── types/
-│   ├── index.ts
-│   └── navigation.ts
-└── utils/
-    ├── imageHelpers.ts
-    └── sortProperties.ts
+- **React Native** with **Expo**
+- **TypeScript** for type safety
+- **React Navigation** for routing and navigation
+- **Expo Linear Gradient** for UI gradients
 
-PROPERTY DATA STRUCTURE:
+## Project Structure
 
-export interface Property {
-  id: string;
-  title: string;
-  location: string;
-  price: number;
-  bedrooms: number;
-  bathrooms: number;
-  area: number;
-  imageUrls: string[];
-  description: string;
-  type: 'apartment' | 'house' | 'villa';
-  isAvailable: boolean;
-  features?: string[];
-  furnished: boolean;
-  petFriendly: boolean;
-  hasParking: boolean;
-  createdAt: Date;
-  owner: Owner;
-}
+```
+.
+├── src/
+│   ├── components/      # Reusable UI components
+│   ├── constants/       # App constants (colors, fonts)
+│   ├── navigation/      # Navigation configuration
+│   ├── screens/         # Application screens
+│   └── types/           # TypeScript type definitions
+├── assets/
+│   └── images/          # Image assets
+├── App.tsx              # Application entry point
+└── package.json
+```
 
-CURRENT STATE:
-- App fully functional with all basic features
-- 12 mock properties with realistic Indonesian data
-- Navigation works smoothly
-- Favorites persist in-memory (Context)
-- All TypeScript types defined
-- No errors, runs smoothly on Expo
+## Getting Started
 
-NEXT FEATURE TO BUILD:
-STEP 11: User Profile & Settings
+### Prerequisites
 
-Please help me implement this feature.
+- Node.js (v14 or higher)
+- npm or yarn
+- Expo CLI (`npm install -g expo-cli`)
+
+### Installation
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Start the development server:
+```bash
+npm start
+```
+
+3. Run on your preferred platform:
+```bash
+npm run android  # For Android
+npm run ios      # For iOS (macOS only)
+npm run web      # For Web
+```
+
+## Development
+
+### Adding New Screens
+
+1. Create a new screen component in `src/screens/`
+2. Add the screen type to `RootStackParamList` in `src/types/navigation.ts`
+3. Register the screen in `src/navigation/RootNavigator.tsx`
+
+### Constants
+
+- **Colors**: Defined in `src/constants/colors.ts`
+- **Fonts**: Defined in `src/constants/fonts.ts`
+
+## Scripts
+
+- `npm start` - Start the Expo development server
+- `npm run android` - Run on Android
+- `npm run ios` - Run on iOS
+- `npm run web` - Run on web browser
+
+## License
+
+MIT
