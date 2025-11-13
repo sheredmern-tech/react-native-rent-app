@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
-import { HomeScreen, PropertyDetailScreen, SearchScreen } from '../screens';
+import { HomeScreen, PropertyDetailScreen, SearchScreen, FavoritesScreen } from '../screens';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -27,6 +27,11 @@ export const RootNavigator: React.FC = () => {
       <Stack.Screen
         name="Search"
         component={SearchScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Favorites"
+        component={FavoritesScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

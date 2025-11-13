@@ -13,6 +13,7 @@ import { RootStackNavigationProp } from '../types';
 import { Colors, Fonts } from '../constants';
 import { PropertyCard, LoadingSpinner, EmptyState } from '../components';
 import { mockProperties } from '../data';
+import { useFavorites } from '../context/FavoritesContext';
 
 type HomeScreenProps = {
   navigation: RootStackNavigationProp<'Home'>;
@@ -35,6 +36,7 @@ const getGreeting = (): string => {
 export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const { favorites } = useFavorites();
 
   useEffect(() => {
     // Show loading spinner on initial mount
@@ -64,13 +66,27 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             Explore the best properties in Indonesia
           </Text>
         </View>
-        <TouchableOpacity
-          style={styles.searchButton}
-          onPress={() => navigation.navigate('Search')}
-          activeOpacity={0.7}
-        >
-          <Ionicons name="search-outline" size={24} color={Colors.primary} />
-        </TouchableOpacity>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => navigation.navigate('Favorites')}
+            activeOpacity={0.7}
+          >
+            <Ionicons name="heart-outline" size={24} color={Colors.primary} />
+            {favorites.length > 0 && (
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>{favorites.length}</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => navigation.navigate('Search')}
+            activeOpacity={0.7}
+          >
+            <Ionicons name="search-outline" size={24} color={Colors.primary} />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -158,7 +174,11 @@ const styles = StyleSheet.create({
     fontWeight: Fonts.weight.regular,
     color: Colors.text.secondary,
   },
-  searchButton: {
+  buttonsContainer: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  iconButton: {
     width: 44,
     height: 44,
     borderRadius: 22,
@@ -173,5 +193,23 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 2,
+    position: 'relative',
+  },
+  badge: {
+    position: 'absolute',
+    top: -4,
+    right: -4,
+    backgroundColor: '#FF3B30',
+    borderRadius: 10,
+    minWidth: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 4,
+  },
+  badgeText: {
+    color: Colors.white,
+    fontSize: 12,
+    fontWeight: Fonts.weight.bold,
   },
 });

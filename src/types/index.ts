@@ -16,3 +16,8 @@ export interface Property {
 }
 
 export type PropertyType = 'apartment' | 'house' | 'villa' | 'all';
+
+export interface FavoriteProperty {
+  propertyId: string;
+  addedAt: Date;
+}

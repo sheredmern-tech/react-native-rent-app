@@ -12,6 +12,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { Property } from '../types';
 import { Colors, Fonts, Animations } from '../constants';
+import { useFavorites } from '../context/FavoritesContext';
 
 interface PropertyCardProps {
   property: Property;
@@ -26,8 +27,10 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
 }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const heartScaleAnim = useRef(new Animated.Value(1)).current;
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   useEffect(() => {
     // Fade in animation with stagger
@@ -55,6 +58,23 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
     }).start();
   };
 
+  const handleToggleFavorite = (e: any) => {
+    e.stopPropagation();
+    toggleFavorite(property.id);
+
+    // Animate heart
+    Animated.sequence([
+      Animated.spring(heartScaleAnim, {
+        toValue: 1.3,
+        useNativeDriver: true,
+      }),
+      Animated.spring(heartScaleAnim, {
+        toValue: 1,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
   const formatPrice = (price: number): string => {
     return `Rp ${price.toLocaleString('id-ID')}/mo`;
   };
@@ -62,6 +82,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
   const visibleFeatures = property.features?.slice(0, 3) || [];
   const remainingFeaturesCount =
     (property.features?.length || 0) - visibleFeatures.length;
+  const favorited = isFavorite(property.id);
 
   return (
     <Animated.View
@@ -136,6 +157,21 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
               {property.isAvailable ? 'AVAILABLE' : 'RENTED'}
             </Text>
           </View>
+
+          {/* Favorite Heart Button */}
+          <TouchableOpacity
+            style={styles.heartButton}
+            onPress={handleToggleFavorite}
+            activeOpacity={0.7}
+          >
+            <Animated.View style={{ transform: [{ scale: heartScaleAnim }] }}>
+              <Ionicons
+                name={favorited ? 'heart' : 'heart-outline'}
+                size={24}
+                color={favorited ? '#FF3B30' : 'white'}
+              />
+            </Animated.View>
+          </TouchableOpacity>
 
           {/* Title and Location on Gradient */}
           <View style={styles.imageTextContainer}>
@@ -299,6 +335,17 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: Fonts.weight.bold,
     letterSpacing: 0.5,
+  },
+  heartButton: {
+    position: 'absolute',
+    top: 46,
+    right: 12,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   imageTextContainer: {
     position: 'absolute',

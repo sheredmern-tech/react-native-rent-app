@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Animated,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -13,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { RootStackNavigationProp, RootStackRouteProp } from '../types';
 import { Colors, Fonts } from '../constants';
 import { mockProperties } from '../data';
+import { useFavorites } from '../context/FavoritesContext';
 
 type PropertyDetailScreenProps = {
   navigation: RootStackNavigationProp<'PropertyDetail'>;
@@ -25,6 +27,8 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
 }) => {
   const { propertyId } = route.params;
   const property = mockProperties.find((p) => p.id === propertyId);
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const heartScaleAnim = useRef(new Animated.Value(1)).current;
 
   if (!property) {
     return (
@@ -52,6 +56,26 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
     console.log('Contact owner for property:', propertyId);
   };
 
+  const handleToggleFavorite = () => {
+    toggleFavorite(propertyId);
+    const favorited = isFavorite(propertyId);
+    console.log(favorited ? 'Removed from favorites' : 'Added to favorites');
+
+    // Animate heart
+    Animated.sequence([
+      Animated.spring(heartScaleAnim, {
+        toValue: 1.4,
+        useNativeDriver: true,
+      }),
+      Animated.spring(heartScaleAnim, {
+        toValue: 1,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
+  const favorited = isFavorite(propertyId);
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
@@ -75,6 +99,21 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
             onPress={() => navigation.goBack()}
           >
             <Ionicons name="arrow-back" size={24} color="white" />
+          </TouchableOpacity>
+
+          {/* Favorite Button */}
+          <TouchableOpacity
+            style={styles.favoriteBtn}
+            onPress={handleToggleFavorite}
+            activeOpacity={0.7}
+          >
+            <Animated.View style={{ transform: [{ scale: heartScaleAnim }] }}>
+              <Ionicons
+                name={favorited ? 'heart' : 'heart-outline'}
+                size={28}
+                color={favorited ? '#FF3B30' : 'white'}
+              />
+            </Animated.View>
           </TouchableOpacity>
 
           {/* Share Button */}
@@ -257,6 +296,17 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  favoriteBtn: {
+    position: 'absolute',
+    top: 50,
+    right: 64,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
     justifyContent: 'center',
     alignItems: 'center',
