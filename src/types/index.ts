@@ -3,6 +3,7 @@ export * from './review';
 export * from './booking';
 export * from './recommendation';
 export * from './recentViews';
+export * from './share';
 
 export interface Owner {
   id: string;

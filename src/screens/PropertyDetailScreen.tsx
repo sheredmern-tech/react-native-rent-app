@@ -21,7 +21,7 @@ import { useLocation } from '../context/LocationContext';
 import { useReviews } from '../context/ReviewContext';
 import { useRecommendations } from '../context/RecommendationContext';
 import { useRecentViews } from '../context/RecentViewsContext';
-import { ImageCarousel, ImageThumbnailGrid, ImageViewerModal, OwnerCard, ContactOwnerModal, StarRating, ReviewCard, RecommendationSection } from '../components';
+import { ImageCarousel, ImageThumbnailGrid, ImageViewerModal, OwnerCard, ContactOwnerModal, StarRating, ReviewCard, RecommendationSection, ShareButton, ShareModal } from '../components';
 import { calculateDistance, formatDistance } from '../utils/locationHelpers';
 
 const { width } = Dimensions.get('window');
@@ -47,6 +47,7 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [fullscreenVisible, setFullscreenVisible] = useState(false);
   const [contactModalVisible, setContactModalVisible] = useState(false);
+  const [shareModalVisible, setShareModalVisible] = useState(false);
 
   // Track property view
   useEffect(() => {
@@ -74,7 +75,7 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
   };
 
   const handleShare = () => {
-    console.log('Share property:', property.id);
+    setShareModalVisible(true);
   };
 
   const handleContact = () => {
@@ -190,9 +191,7 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
           </TouchableOpacity>
 
           {/* Share Button */}
-          <TouchableOpacity style={styles.shareBtn} onPress={handleShare}>
-            <Ionicons name="share-social-outline" size={24} color="white" />
-          </TouchableOpacity>
+          <ShareButton onPress={handleShare} size="medium" style={styles.shareBtn} />
         </View>
 
         {/* Thumbnail Grid */}
@@ -507,6 +506,18 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
         visible={contactModalVisible}
         property={property}
         onClose={() => setContactModalVisible(false)}
+      />
+
+      {/* Share Modal */}
+      <ShareModal
+        visible={shareModalVisible}
+        onClose={() => setShareModalVisible(false)}
+        property={{
+          propertyId: property.id,
+          title: property.title,
+          price: property.price,
+          location: property.location,
+        }}
       />
     </View>
   );
