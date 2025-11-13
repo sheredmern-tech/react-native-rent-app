@@ -2,6 +2,7 @@ export * from './navigation';
 export * from './review';
 export * from './booking';
 export * from './recommendation';
+export * from './recentViews';
 
 export interface Owner {
   id: string;

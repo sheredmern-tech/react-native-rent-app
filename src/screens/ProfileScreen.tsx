@@ -15,6 +15,7 @@ import { Colors, Fonts } from '../constants';
 import { useUser } from '../context/UserContext';
 import { useFavorites } from '../context/FavoritesContext';
 import { useBookings } from '../context/BookingContext';
+import { useRecentViews } from '../context/RecentViewsContext';
 import { MenuButton } from '../components/MenuButton';
 
 export const ProfileScreen: React.FC = () => {
@@ -22,6 +23,7 @@ export const ProfileScreen: React.FC = () => {
   const { user } = useUser();
   const { favorites } = useFavorites();
   const { getUpcomingBookings } = useBookings();
+  const { recentViews } = useRecentViews();
 
   // Get user initials for avatar
   const getInitials = (name: string): string => {
@@ -136,11 +138,15 @@ export const ProfileScreen: React.FC = () => {
             <Text style={styles.statNumber}>{favorites.length}</Text>
             <Text style={styles.statLabel}>Saved</Text>
           </View>
-          <View style={styles.statCard}>
+          <TouchableOpacity
+            style={styles.statCard}
+            onPress={() => navigation.navigate('RecentViews')}
+            activeOpacity={0.7}
+          >
             <Ionicons name="eye" size={32} color={Colors.primary} />
-            <Text style={styles.statNumber}>{user.viewedProperties}</Text>
+            <Text style={styles.statNumber}>{recentViews.length}</Text>
             <Text style={styles.statLabel}>Viewed</Text>
-          </View>
+          </TouchableOpacity>
           <View style={styles.statCard}>
             <Ionicons name="calendar" size={32} color={Colors.primary} />
             <Text style={styles.statNumber}>{getUpcomingBookings(user.id).length}</Text>
@@ -159,6 +165,11 @@ export const ProfileScreen: React.FC = () => {
             icon="calendar-outline"
             label="My Bookings"
             onPress={handleMyBookings}
+          />
+          <MenuButton
+            icon="eye-outline"
+            label="View History"
+            onPress={() => navigation.navigate('RecentViews')}
           />
           <MenuButton
             icon="settings-outline"

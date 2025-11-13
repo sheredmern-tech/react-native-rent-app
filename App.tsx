@@ -10,27 +10,30 @@ import { LocationProvider } from './src/context/LocationContext';
 import { ReviewProvider } from './src/context/ReviewContext';
 import { BookingProvider } from './src/context/BookingContext';
 import { RecommendationProvider } from './src/context/RecommendationContext';
+import { RecentViewsProvider } from './src/context/RecentViewsContext';
 
 export default function App() {
   return (
     <SafeAreaProvider>
       <UserProvider>
-        <FavoritesProvider>
-          <ReviewProvider>
-            <BookingProvider>
-              <RecommendationProvider>
-                <ComparisonProvider>
-                  <LocationProvider>
-                    <NavigationContainer>
-                      <RootNavigator />
-                      <StatusBar style="auto" />
-                    </NavigationContainer>
-                  </LocationProvider>
-                </ComparisonProvider>
-              </RecommendationProvider>
-            </BookingProvider>
-          </ReviewProvider>
-        </FavoritesProvider>
+        <RecentViewsProvider>
+          <FavoritesProvider>
+            <ReviewProvider>
+              <BookingProvider>
+                <RecommendationProvider>
+                  <ComparisonProvider>
+                    <LocationProvider>
+                      <NavigationContainer>
+                        <RootNavigator />
+                        <StatusBar style="auto" />
+                      </NavigationContainer>
+                    </LocationProvider>
+                  </ComparisonProvider>
+                </RecommendationProvider>
+              </BookingProvider>
+            </ReviewProvider>
+          </FavoritesProvider>
+        </RecentViewsProvider>
       </UserProvider>
     </SafeAreaProvider>
   );

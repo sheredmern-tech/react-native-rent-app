@@ -24,6 +24,7 @@ export type RootStackParamList = {
   BookingDetail: { bookingId: string };
   Recommendations: undefined;
   SimilarProperties: { propertyId: string };
+  RecentViews: undefined;
 };
 
 export type RootStackNavigationProp<T extends keyof RootStackParamList> =

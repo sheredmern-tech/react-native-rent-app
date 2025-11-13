@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -20,6 +20,7 @@ import { useComparison } from '../context/ComparisonContext';
 import { useLocation } from '../context/LocationContext';
 import { useReviews } from '../context/ReviewContext';
 import { useRecommendations } from '../context/RecommendationContext';
+import { useRecentViews } from '../context/RecentViewsContext';
 import { ImageCarousel, ImageThumbnailGrid, ImageViewerModal, OwnerCard, ContactOwnerModal, StarRating, ReviewCard, RecommendationSection } from '../components';
 import { calculateDistance, formatDistance } from '../utils/locationHelpers';
 
@@ -41,10 +42,18 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
     useComparison();
   const { getReviewsByProperty, getReviewStats } = useReviews();
   const { getSimilarProperties } = useRecommendations();
+  const { addRecentView } = useRecentViews();
   const heartScaleAnim = useRef(new Animated.Value(1)).current;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [fullscreenVisible, setFullscreenVisible] = useState(false);
   const [contactModalVisible, setContactModalVisible] = useState(false);
+
+  // Track property view
+  useEffect(() => {
+    if (property?.id) {
+      addRecentView(property.id);
+    }
+  }, [property?.id]);
 
   if (!property) {
     return (

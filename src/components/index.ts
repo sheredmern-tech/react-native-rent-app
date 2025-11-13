@@ -33,3 +33,5 @@ export { TrendingBadge } from './TrendingBadge';
 export { NewListingBadge } from './NewListingBadge';
 export { RecommendationCard } from './RecommendationCard';
 export { RecommendationSection } from './RecommendationSection';
+export { RecentViewCard } from './RecentViewCard';
+export { RecentViewsSection } from './RecentViewsSection';

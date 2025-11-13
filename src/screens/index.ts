@@ -19,3 +19,4 @@ export { MyBookingsScreen } from './MyBookingsScreen';
 export { BookingDetailScreen } from './BookingDetailScreen';
 export { RecommendationsScreen } from './RecommendationsScreen';
 export { SimilarPropertiesScreen } from './SimilarPropertiesScreen';
+export { RecentViewsScreen } from './RecentViewsScreen';

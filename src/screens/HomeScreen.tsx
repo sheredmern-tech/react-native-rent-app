@@ -11,7 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackNavigationProp } from '../types';
 import { Colors, Fonts } from '../constants';
-import { PropertyCard, LoadingSpinner, EmptyState, ComparisonButton } from '../components';
+import { PropertyCard, LoadingSpinner, EmptyState, ComparisonButton, RecentViewsSection } from '../components';
 import { mockProperties } from '../data';
 import { useFavorites } from '../context/FavoritesContext';
 
@@ -58,63 +58,68 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   };
 
   const renderHeader = () => (
-    <View style={styles.headerContainer}>
-      <View style={styles.headerRow}>
-        {/* Profile Button - Left Side */}
-        <TouchableOpacity
-          style={styles.profileButton}
-          onPress={() => navigation.navigate('Profile')}
-          activeOpacity={0.7}
-        >
-          <Ionicons name="person-circle-outline" size={32} color={Colors.primary} />
-        </TouchableOpacity>
+    <>
+      <View style={styles.headerContainer}>
+        <View style={styles.headerRow}>
+          {/* Profile Button - Left Side */}
+          <TouchableOpacity
+            style={styles.profileButton}
+            onPress={() => navigation.navigate('Profile')}
+            activeOpacity={0.7}
+          >
+            <Ionicons name="person-circle-outline" size={32} color={Colors.primary} />
+          </TouchableOpacity>
 
-        {/* Text Content - Center */}
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.title}>{getGreeting()}</Text>
-          <Text style={styles.subtitle}>
-            Explore the best properties in Indonesia
-          </Text>
-        </View>
+          {/* Text Content - Center */}
+          <View style={styles.headerTextContainer}>
+            <Text style={styles.title}>{getGreeting()}</Text>
+            <Text style={styles.subtitle}>
+              Explore the best properties in Indonesia
+            </Text>
+          </View>
 
-        {/* Action Buttons - Right Side */}
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={() => navigation.navigate('Recommendations')}
-            activeOpacity={0.7}
-          >
-            <Ionicons name="compass-outline" size={24} color={Colors.primary} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={() => navigation.navigate('Map')}
-            activeOpacity={0.7}
-          >
-            <Ionicons name="map-outline" size={24} color={Colors.primary} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={() => navigation.navigate('Favorites')}
-            activeOpacity={0.7}
-          >
-            <Ionicons name="heart-outline" size={24} color={Colors.primary} />
-            {favorites.length > 0 && (
-              <View style={styles.badge}>
-                <Text style={styles.badgeText}>{favorites.length}</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={() => navigation.navigate('Search')}
-            activeOpacity={0.7}
-          >
-            <Ionicons name="search-outline" size={24} color={Colors.primary} />
-          </TouchableOpacity>
+          {/* Action Buttons - Right Side */}
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={() => navigation.navigate('Recommendations')}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="compass-outline" size={24} color={Colors.primary} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={() => navigation.navigate('Map')}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="map-outline" size={24} color={Colors.primary} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={() => navigation.navigate('Favorites')}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="heart-outline" size={24} color={Colors.primary} />
+              {favorites.length > 0 && (
+                <View style={styles.badge}>
+                  <Text style={styles.badgeText}>{favorites.length}</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={() => navigation.navigate('Search')}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="search-outline" size={24} color={Colors.primary} />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+
+      {/* Recent Views Section */}
+      <RecentViewsSection />
+    </>
   );
 
   if (loading) {
