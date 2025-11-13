@@ -28,3 +28,8 @@ export { VisitTypeSelector } from './VisitTypeSelector';
 export { DatePicker } from './DatePicker';
 export { TimeSlotPicker } from './TimeSlotPicker';
 export { BookingCard } from './BookingCard';
+export { MatchScoreBadge } from './MatchScoreBadge';
+export { TrendingBadge } from './TrendingBadge';
+export { NewListingBadge } from './NewListingBadge';
+export { RecommendationCard } from './RecommendationCard';
+export { RecommendationSection } from './RecommendationSection';

@@ -21,6 +21,8 @@ import {
   ScheduleVisitScreen,
   MyBookingsScreen,
   BookingDetailScreen,
+  RecommendationsScreen,
+  SimilarPropertiesScreen,
 } from '../screens';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -128,6 +130,16 @@ export const RootNavigator: React.FC = () => {
         name="BookingDetail"
         component={BookingDetailScreen}
         options={{ title: 'Booking Details' }}
+      />
+      <Stack.Screen
+        name="Recommendations"
+        component={RecommendationsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SimilarProperties"
+        component={SimilarPropertiesScreen}
+        options={{ title: 'Similar Properties' }}
       />
     </Stack.Navigator>
   );

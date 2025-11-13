@@ -19,7 +19,8 @@ import { useFavorites } from '../context/FavoritesContext';
 import { useComparison } from '../context/ComparisonContext';
 import { useLocation } from '../context/LocationContext';
 import { useReviews } from '../context/ReviewContext';
-import { ImageCarousel, ImageThumbnailGrid, ImageViewerModal, OwnerCard, ContactOwnerModal, StarRating, ReviewCard } from '../components';
+import { useRecommendations } from '../context/RecommendationContext';
+import { ImageCarousel, ImageThumbnailGrid, ImageViewerModal, OwnerCard, ContactOwnerModal, StarRating, ReviewCard, RecommendationSection } from '../components';
 import { calculateDistance, formatDistance } from '../utils/locationHelpers';
 
 const { width } = Dimensions.get('window');
@@ -39,6 +40,7 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
   const { isInComparison, addToComparison, removeFromComparison } =
     useComparison();
   const { getReviewsByProperty, getReviewStats } = useReviews();
+  const { getSimilarProperties } = useRecommendations();
   const heartScaleAnim = useRef(new Animated.Value(1)).current;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [fullscreenVisible, setFullscreenVisible] = useState(false);
@@ -442,6 +444,21 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
             <OwnerCard owner={property.owner} onContactPress={handleContact} />
           </View>
 
+          {/* Similar Properties */}
+          <View style={styles.similarPropertiesSection}>
+            <RecommendationSection
+              title="Similar Properties"
+              icon="home-outline"
+              recommendations={getSimilarProperties(property.id).slice(0, 5)}
+              onPressCard={(rec) =>
+                navigation.push('PropertyDetail', { property: rec.property })
+              }
+              onPressSeeAll={() =>
+                navigation.navigate('SimilarProperties', { propertyId: property.id })
+              }
+            />
+          </View>
+
           {/* Bottom Padding */}
           <View style={styles.bottomPadding} />
         </View>
@@ -669,6 +686,11 @@ const styles = StyleSheet.create({
   },
   section: {
     marginTop: 24,
+  },
+  similarPropertiesSection: {
+    marginTop: 24,
+    marginLeft: -16,
+    marginRight: -16,
   },
   sectionHeading: {
     fontSize: 20,

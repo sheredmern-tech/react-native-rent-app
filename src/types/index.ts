@@ -1,6 +1,7 @@
 export * from './navigation';
 export * from './review';
 export * from './booking';
+export * from './recommendation';
 
 export interface Owner {
   id: string;
