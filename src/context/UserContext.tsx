@@ -1,14 +1,13 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { User, UserSettings } from '../types';
+import { User, AppSettings } from '../types';
 
 interface UserContextType {
   user: User;
-  settings: UserSettings;
-  updateUser: (updates: Partial<User>) => void;
-  updateSettings: (updates: Partial<UserSettings>) => void;
-  updateNotificationSettings: (updates: Partial<UserSettings['notifications']>) => void;
-  updatePreferences: (updates: Partial<UserSettings['preferences']>) => void;
-  updatePrivacy: (updates: Partial<UserSettings['privacy']>) => void;
+  settings: AppSettings;
+  updateUser: (data: Partial<User>) => void;
+  updateAvatar: (uri: string) => void;
+  updateSettings: (data: Partial<AppSettings>) => void;
+  getSavedPropertiesCount: () => number;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -23,70 +22,52 @@ const defaultUser: User = {
   name: 'Budi Santoso',
   email: 'budi.santoso@email.com',
   phone: '+62 812-3456-7890',
-  avatar: 'https://ui-avatars.com/api/?name=Budi+Santoso&background=4A90E2&color=fff&size=200',
-  bio: 'Looking for the perfect rental property in Jakarta',
-  joinedDate: new Date('2024-01-15'),
-  location: 'Jakarta, Indonesia',
+  avatar: undefined, // Will use initials
+  joinedDate: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000), // 3 months ago
+  savedProperties: 0, // Will be synced with favorites
+  viewedProperties: 8,
 };
 
-const defaultSettings: UserSettings = {
+const defaultSettings: AppSettings = {
   notifications: {
-    newProperties: true,
-    priceDrops: true,
-    messages: true,
-    newsletter: false,
+    push: true,
+    email: false,
   },
   preferences: {
+    language: 'en',
     currency: 'IDR',
-    language: 'id',
-    darkMode: false,
+    distanceUnit: 'km',
   },
-  privacy: {
-    showEmail: false,
-    showPhone: false,
-    showProfile: true,
-  },
+  darkMode: false,
 };
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User>(defaultUser);
-  const [settings, setSettings] = useState<UserSettings>(defaultSettings);
+  const [settings, setSettings] = useState<AppSettings>(defaultSettings);
 
-  const updateUser = (updates: Partial<User>) => {
+  const updateUser = (data: Partial<User>) => {
     setUser((prev) => {
-      console.log('Updating user:', updates);
-      return { ...prev, ...updates };
+      console.log('Updating user:', data);
+      return { ...prev, ...data };
     });
   };
 
-  const updateSettings = (updates: Partial<UserSettings>) => {
+  const updateAvatar = (uri: string) => {
+    setUser((prev) => ({
+      ...prev,
+      avatar: uri,
+    }));
+  };
+
+  const updateSettings = (data: Partial<AppSettings>) => {
     setSettings((prev) => {
-      console.log('Updating settings:', updates);
-      return { ...prev, ...updates };
+      console.log('Updating settings:', data);
+      return { ...prev, ...data };
     });
   };
 
-  const updateNotificationSettings = (
-    updates: Partial<UserSettings['notifications']>
-  ) => {
-    setSettings((prev) => ({
-      ...prev,
-      notifications: { ...prev.notifications, ...updates },
-    }));
-  };
-
-  const updatePreferences = (updates: Partial<UserSettings['preferences']>) => {
-    setSettings((prev) => ({
-      ...prev,
-      preferences: { ...prev.preferences, ...updates },
-    }));
-  };
-
-  const updatePrivacy = (updates: Partial<UserSettings['privacy']>) => {
-    setSettings((prev) => ({
-      ...prev,
-      privacy: { ...prev.privacy, ...updates },
-    }));
+  const getSavedPropertiesCount = (): number => {
+    return user.savedProperties;
   };
 
   return (
@@ -95,10 +76,9 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         user,
         settings,
         updateUser,
+        updateAvatar,
         updateSettings,
-        updateNotificationSettings,
-        updatePreferences,
-        updatePrivacy,
+        getSavedPropertiesCount,
       }}
     >
       {children}

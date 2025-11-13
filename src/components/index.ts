@@ -11,4 +11,5 @@ export { ImageViewerModal } from './ImageViewerModal';
 export { ContactMethodButton } from './ContactMethodButton';
 export { ContactOwnerModal } from './ContactOwnerModal';
 export { OwnerCard } from './OwnerCard';
-export { EditProfileModal } from './EditProfileModal';
+export { MenuButton } from './MenuButton';
+export { SettingItem } from './SettingItem';

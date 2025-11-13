@@ -70,26 +70,20 @@ export interface User {
   email: string;
   phone: string;
   avatar?: string;
-  bio?: string;
   joinedDate: Date;
-  location?: string;
+  savedProperties: number;
+  viewedProperties: number;
 }
 
-export interface UserSettings {
+export interface AppSettings {
   notifications: {
-    newProperties: boolean;
-    priceDrops: boolean;
-    messages: boolean;
-    newsletter: boolean;
+    push: boolean;
+    email: boolean;
   };
   preferences: {
+    language: 'en' | 'id';
     currency: 'IDR' | 'USD';
-    language: 'id' | 'en';
-    darkMode: boolean;
+    distanceUnit: 'km' | 'mi';
   };
-  privacy: {
-    showEmail: boolean;
-    showPhone: boolean;
-    showProfile: boolean;
-  };
+  darkMode: boolean;
 }

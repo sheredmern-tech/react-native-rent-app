@@ -60,12 +60,24 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const renderHeader = () => (
     <View style={styles.headerContainer}>
       <View style={styles.headerRow}>
+        {/* Profile Button - Left Side */}
+        <TouchableOpacity
+          style={styles.profileButton}
+          onPress={() => navigation.navigate('Profile')}
+          activeOpacity={0.7}
+        >
+          <Ionicons name="person-circle-outline" size={32} color={Colors.primary} />
+        </TouchableOpacity>
+
+        {/* Text Content - Center */}
         <View style={styles.headerTextContainer}>
           <Text style={styles.title}>{getGreeting()}</Text>
           <Text style={styles.subtitle}>
             Explore the best properties in Indonesia
           </Text>
         </View>
+
+        {/* Action Buttons - Right Side */}
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
             style={styles.iconButton}
@@ -85,13 +97,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             activeOpacity={0.7}
           >
             <Ionicons name="search-outline" size={24} color={Colors.primary} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={() => navigation.navigate('Profile')}
-            activeOpacity={0.7}
-          >
-            <Ionicons name="person-outline" size={24} color={Colors.primary} />
           </TouchableOpacity>
         </View>
       </View>
@@ -165,6 +170,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
+  },
+  profileButton: {
+    marginRight: 12,
+    marginTop: 4,
   },
   headerTextContainer: {
     flex: 1,

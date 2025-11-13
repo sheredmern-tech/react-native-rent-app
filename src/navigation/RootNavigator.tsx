@@ -1,7 +1,18 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
-import { HomeScreen, PropertyDetailScreen, SearchScreen, FavoritesScreen, ProfileScreen } from '../screens';
+import {
+  HomeScreen,
+  PropertyDetailScreen,
+  SearchScreen,
+  FavoritesScreen,
+  ProfileScreen,
+  EditProfileScreen,
+  SettingsScreen,
+  AboutScreen,
+  TermsScreen,
+  PrivacyScreen,
+} from '../screens';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -37,7 +48,32 @@ export const RootNavigator: React.FC = () => {
       <Stack.Screen
         name="Profile"
         component={ProfileScreen}
-        options={{ title: 'Profile' }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{ title: 'Edit Profile' }}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ title: 'Settings' }}
+      />
+      <Stack.Screen
+        name="About"
+        component={AboutScreen}
+        options={{ title: 'About' }}
+      />
+      <Stack.Screen
+        name="Terms"
+        component={TermsScreen}
+        options={{ title: 'Terms & Conditions' }}
+      />
+      <Stack.Screen
+        name="Privacy"
+        component={PrivacyScreen}
+        options={{ title: 'Privacy Policy' }}
       />
     </Stack.Navigator>
   );

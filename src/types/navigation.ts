@@ -7,6 +7,11 @@ export type RootStackParamList = {
   Search: undefined;
   Favorites: undefined;
   Profile: undefined;
+  EditProfile: undefined;
+  Settings: undefined;
+  About: undefined;
+  Terms: undefined;
+  Privacy: undefined;
 };
 
 export type RootStackNavigationProp<T extends keyof RootStackParamList> =

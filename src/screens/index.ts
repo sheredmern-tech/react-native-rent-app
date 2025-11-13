@@ -3,3 +3,8 @@ export { PropertyDetailScreen } from './PropertyDetailScreen';
 export { SearchScreen } from './SearchScreen';
 export { FavoritesScreen } from './FavoritesScreen';
 export { ProfileScreen } from './ProfileScreen';
+export { EditProfileScreen } from './EditProfileScreen';
+export { SettingsScreen } from './SettingsScreen';
+export { AboutScreen } from './AboutScreen';
+export { TermsScreen } from './TermsScreen';
+export { PrivacyScreen } from './PrivacyScreen';
