@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   clearAllButton: {
     fontSize: 14,
     color: '#F44336',
-    fontWeight: Fonts.weight.semibold,
+    fontWeight: Fonts.weight.semiBold,
   },
   scrollView: {
     flexGrow: 0,
