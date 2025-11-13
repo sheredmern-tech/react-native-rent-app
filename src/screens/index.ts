@@ -8,3 +8,4 @@ export { SettingsScreen } from './SettingsScreen';
 export { AboutScreen } from './AboutScreen';
 export { TermsScreen } from './TermsScreen';
 export { PrivacyScreen } from './PrivacyScreen';
+export { ComparisonScreen } from './ComparisonScreen';

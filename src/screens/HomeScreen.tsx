@@ -11,7 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackNavigationProp } from '../types';
 import { Colors, Fonts } from '../constants';
-import { PropertyCard, LoadingSpinner, EmptyState } from '../components';
+import { PropertyCard, LoadingSpinner, EmptyState, ComparisonButton } from '../components';
 import { mockProperties } from '../data';
 import { useFavorites } from '../context/FavoritesContext';
 
@@ -149,6 +149,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           />
         }
       />
+      <ComparisonButton />
     </SafeAreaView>
   );
 };

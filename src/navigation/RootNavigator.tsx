@@ -12,6 +12,7 @@ import {
   AboutScreen,
   TermsScreen,
   PrivacyScreen,
+  ComparisonScreen,
 } from '../screens';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -74,6 +75,11 @@ export const RootNavigator: React.FC = () => {
         name="Privacy"
         component={PrivacyScreen}
         options={{ title: 'Privacy Policy' }}
+      />
+      <Stack.Screen
+        name="Comparison"
+        component={ComparisonScreen}
+        options={{ title: 'Bandingkan Properti' }}
       />
     </Stack.Navigator>
   );

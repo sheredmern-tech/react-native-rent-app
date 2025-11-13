@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Property } from '../types';
 import { Colors, Fonts, Animations } from '../constants';
 import { useFavorites } from '../context/FavoritesContext';
+import { useComparison } from '../context/ComparisonContext';
 
 interface PropertyCardProps {
   property: Property;
@@ -31,6 +32,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { isInComparison, addToComparison, removeFromComparison, canAddMore } =
+    useComparison();
 
   useEffect(() => {
     // Fade in animation with stagger
@@ -73,6 +76,15 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
         useNativeDriver: true,
       }),
     ]).start();
+  };
+
+  const handleToggleComparison = (e: any) => {
+    e.stopPropagation();
+    if (isInComparison(property.id)) {
+      removeFromComparison(property.id);
+    } else {
+      addToComparison(property);
+    }
   };
 
   const formatPrice = (price: number): string => {
@@ -173,6 +185,24 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
                 color={favorited ? '#FF3B30' : 'white'}
               />
             </Animated.View>
+          </TouchableOpacity>
+
+          {/* Compare Button */}
+          <TouchableOpacity
+            style={styles.compareButton}
+            onPress={handleToggleComparison}
+            activeOpacity={0.7}
+            disabled={!isInComparison(property.id) && !canAddMore()}
+          >
+            <Ionicons
+              name={
+                isInComparison(property.id)
+                  ? 'checkmark-circle'
+                  : 'git-compare-outline'
+              }
+              size={22}
+              color={isInComparison(property.id) ? Colors.primary : 'white'}
+            />
           </TouchableOpacity>
 
           {/* Gallery Indicator */}
@@ -372,6 +402,17 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  compareButton: {
+    position: 'absolute',
+    top: 92,
+    right: 12,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
     justifyContent: 'center',
     alignItems: 'center',

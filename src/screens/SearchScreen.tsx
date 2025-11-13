@@ -21,7 +21,7 @@ import {
   FilterPreset,
 } from '../types';
 import { Colors, Fonts } from '../constants';
-import { SearchBar, FilterButton, PropertyCard, EmptyState, SortModal, FilterChip } from '../components';
+import { SearchBar, FilterButton, PropertyCard, EmptyState, SortModal, FilterChip, ComparisonButton } from '../components';
 import { mockProperties } from '../data';
 import { sortProperties, getSortLabel } from '../utils/sortProperties';
 
@@ -558,6 +558,7 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
         onSelectSort={setSortOption}
         onClose={() => setShowSortModal(false)}
       />
+      <ComparisonButton />
     </SafeAreaView>
   );
 };

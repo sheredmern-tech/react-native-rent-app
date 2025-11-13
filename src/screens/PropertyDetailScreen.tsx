@@ -14,6 +14,7 @@ import { RootStackNavigationProp, RootStackRouteProp } from '../types';
 import { Colors, Fonts } from '../constants';
 import { mockProperties } from '../data';
 import { useFavorites } from '../context/FavoritesContext';
+import { useComparison } from '../context/ComparisonContext';
 import { ImageCarousel, ImageThumbnailGrid, ImageViewerModal, OwnerCard, ContactOwnerModal } from '../components';
 
 type PropertyDetailScreenProps = {
@@ -28,6 +29,8 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
   const { propertyId } = route.params;
   const property = mockProperties.find((p) => p.id === propertyId);
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { isInComparison, addToComparison, removeFromComparison } =
+    useComparison();
   const heartScaleAnim = useRef(new Animated.Value(1)).current;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [fullscreenVisible, setFullscreenVisible] = useState(false);
@@ -77,7 +80,18 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
     ]).start();
   };
 
+  const handleToggleComparison = () => {
+    if (!property) return;
+
+    if (isInComparison(propertyId)) {
+      removeFromComparison(propertyId);
+    } else {
+      addToComparison(property);
+    }
+  };
+
   const favorited = isFavorite(propertyId);
+  const inComparison = property ? isInComparison(propertyId) : false;
 
   const handleImagePress = (index: number) => {
     setCurrentImageIndex(index);
@@ -126,6 +140,19 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
                 color={favorited ? '#FF3B30' : 'white'}
               />
             </Animated.View>
+          </TouchableOpacity>
+
+          {/* Compare Button */}
+          <TouchableOpacity
+            style={styles.compareBtn}
+            onPress={handleToggleComparison}
+            activeOpacity={0.7}
+          >
+            <Ionicons
+              name={inComparison ? 'checkmark-circle' : 'git-compare-outline'}
+              size={24}
+              color={inComparison ? Colors.primary : 'white'}
+            />
           </TouchableOpacity>
 
           {/* Share Button */}
@@ -370,10 +397,21 @@ const styles = StyleSheet.create({
   favoriteBtn: {
     position: 'absolute',
     top: 50,
-    right: 64,
+    right: 112,
     width: 44,
     height: 44,
     borderRadius: 22,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  compareBtn: {
+    position: 'absolute',
+    top: 50,
+    right: 64,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
     justifyContent: 'center',
     alignItems: 'center',

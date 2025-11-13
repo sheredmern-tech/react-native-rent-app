@@ -13,3 +13,5 @@ export { ContactOwnerModal } from './ContactOwnerModal';
 export { OwnerCard } from './OwnerCard';
 export { MenuButton } from './MenuButton';
 export { SettingItem } from './SettingItem';
+export { ComparisonButton } from './ComparisonButton';
+export { ComparisonRow } from './ComparisonRow';

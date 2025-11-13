@@ -12,6 +12,7 @@ export type RootStackParamList = {
   About: undefined;
   Terms: undefined;
   Privacy: undefined;
+  Comparison: undefined;
 };
 
 export type RootStackNavigationProp<T extends keyof RootStackParamList> =
