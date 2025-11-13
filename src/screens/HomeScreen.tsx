@@ -86,6 +86,13 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           >
             <Ionicons name="search-outline" size={24} color={Colors.primary} />
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => navigation.navigate('Profile')}
+            activeOpacity={0.7}
+          >
+            <Ionicons name="person-outline" size={24} color={Colors.primary} />
+          </TouchableOpacity>
         </View>
       </View>
     </View>

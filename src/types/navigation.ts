@@ -6,6 +6,7 @@ export type RootStackParamList = {
   PropertyDetail: { propertyId: string };
   Search: undefined;
   Favorites: undefined;
+  Profile: undefined;
 };
 
 export type RootStackNavigationProp<T extends keyof RootStackParamList> =

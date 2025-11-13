@@ -63,3 +63,33 @@ export interface FavoriteProperty {
   propertyId: string;
   addedAt: Date;
 }
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  avatar?: string;
+  bio?: string;
+  joinedDate: Date;
+  location?: string;
+}
+
+export interface UserSettings {
+  notifications: {
+    newProperties: boolean;
+    priceDrops: boolean;
+    messages: boolean;
+    newsletter: boolean;
+  };
+  preferences: {
+    currency: 'IDR' | 'USD';
+    language: 'id' | 'en';
+    darkMode: boolean;
+  };
+  privacy: {
+    showEmail: boolean;
+    showPhone: boolean;
+    showProfile: boolean;
+  };
+}

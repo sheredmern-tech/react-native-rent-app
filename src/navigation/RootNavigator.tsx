@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
-import { HomeScreen, PropertyDetailScreen, SearchScreen, FavoritesScreen } from '../screens';
+import { HomeScreen, PropertyDetailScreen, SearchScreen, FavoritesScreen, ProfileScreen } from '../screens';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -33,6 +33,11 @@ export const RootNavigator: React.FC = () => {
         name="Favorites"
         component={FavoritesScreen}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ title: 'Profile' }}
       />
     </Stack.Navigator>
   );
