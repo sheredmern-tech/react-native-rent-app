@@ -15,6 +15,9 @@ import {
   ComparisonScreen,
   MapScreen,
   NearbyPropertiesScreen,
+  PropertyReviewsScreen,
+  WriteReviewScreen,
+  EditReviewScreen,
 } from '../screens';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -92,6 +95,21 @@ export const RootNavigator: React.FC = () => {
         name="NearbyProperties"
         component={NearbyPropertiesScreen}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PropertyReviews"
+        component={PropertyReviewsScreen}
+        options={{ title: 'Reviews' }}
+      />
+      <Stack.Screen
+        name="WriteReview"
+        component={WriteReviewScreen}
+        options={{ title: 'Write Review' }}
+      />
+      <Stack.Screen
+        name="EditReview"
+        component={EditReviewScreen}
+        options={{ title: 'Edit Review' }}
       />
     </Stack.Navigator>
   );

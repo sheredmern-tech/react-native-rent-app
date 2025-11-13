@@ -18,7 +18,8 @@ import { mockProperties } from '../data';
 import { useFavorites } from '../context/FavoritesContext';
 import { useComparison } from '../context/ComparisonContext';
 import { useLocation } from '../context/LocationContext';
-import { ImageCarousel, ImageThumbnailGrid, ImageViewerModal, OwnerCard, ContactOwnerModal } from '../components';
+import { useReviews } from '../context/ReviewContext';
+import { ImageCarousel, ImageThumbnailGrid, ImageViewerModal, OwnerCard, ContactOwnerModal, StarRating, ReviewCard } from '../components';
 import { calculateDistance, formatDistance } from '../utils/locationHelpers';
 
 const { width } = Dimensions.get('window');
@@ -37,6 +38,7 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
   const { isFavorite, toggleFavorite } = useFavorites();
   const { isInComparison, addToComparison, removeFromComparison } =
     useComparison();
+  const { getReviewsByProperty, getReviewStats } = useReviews();
   const heartScaleAnim = useRef(new Animated.Value(1)).current;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [fullscreenVisible, setFullscreenVisible] = useState(false);
@@ -108,6 +110,11 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
         property.longitude
       )
     : null;
+
+  // Get reviews data
+  const reviewStats = getReviewStats(property.id);
+  const allReviews = getReviewsByProperty(property.id);
+  const recentReviews = allReviews.slice(0, 2); // Show first 2 reviews
 
   const handleImagePress = (index: number) => {
     setCurrentImageIndex(index);
@@ -365,6 +372,69 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
               <Text style={styles.addressText}>{property.location}</Text>
             </View>
           </View>
+
+          {/* Reviews & Ratings */}
+          {reviewStats.totalReviews > 0 && (
+            <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionHeading}>Reviews & Ratings</Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('PropertyReviews', {
+                      propertyId: property.id,
+                      propertyTitle: property.title,
+                    })
+                  }
+                  activeOpacity={0.7}
+                >
+                  <Text style={styles.seeAllText}>
+                    See All ({reviewStats.totalReviews})
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* Rating Summary */}
+              <View style={styles.ratingSummary}>
+                <View style={styles.ratingLeft}>
+                  <Text style={styles.ratingNumber}>
+                    {reviewStats.averageRating.toFixed(1)}
+                  </Text>
+                  <StarRating
+                    rating={reviewStats.averageRating}
+                    size={20}
+                    showNumber={false}
+                  />
+                  <Text style={styles.ratingCount}>
+                    {reviewStats.totalReviews}{' '}
+                    {reviewStats.totalReviews === 1 ? 'review' : 'reviews'}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.writeReviewButton}
+                  onPress={() =>
+                    navigation.navigate('WriteReview', {
+                      propertyId: property.id,
+                      propertyTitle: property.title,
+                    })
+                  }
+                  activeOpacity={0.8}
+                >
+                  <Ionicons name="chatbox-ellipses-outline" size={18} color={Colors.primary} />
+                  <Text style={styles.writeReviewText}>Write Review</Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* Recent Reviews */}
+              {recentReviews.map((review) => (
+                <View key={review.id} style={styles.reviewCardWrapper}>
+                  <ReviewCard
+                    review={review}
+                    showActions={false}
+                  />
+                </View>
+              ))}
+            </View>
+          )}
 
           {/* Owner Information */}
           <View style={styles.section}>
@@ -718,5 +788,62 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     color: Colors.text.secondary,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  seeAllText: {
+    fontSize: 14,
+    fontFamily: Fonts.family.semiBold,
+    color: Colors.primary,
+  },
+  ratingSummary: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: Colors.surface,
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  ratingLeft: {
+    flex: 1,
+    alignItems: 'flex-start',
+  },
+  ratingNumber: {
+    fontSize: 32,
+    fontFamily: Fonts.family.bold,
+    color: Colors.text.primary,
+    marginBottom: 8,
+  },
+  ratingCount: {
+    fontSize: 13,
+    fontFamily: Fonts.family.regular,
+    color: Colors.text.secondary,
+    marginTop: 6,
+  },
+  writeReviewButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: `${Colors.primary}10`,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: Colors.primary,
+  },
+  writeReviewText: {
+    fontSize: 14,
+    fontFamily: Fonts.family.semiBold,
+    color: Colors.primary,
+    marginLeft: 6,
+  },
+  reviewCardWrapper: {
+    marginTop: 12,
   },
 });

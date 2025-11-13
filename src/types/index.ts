@@ -1,4 +1,5 @@
 export * from './navigation';
+export * from './review';
 
 export interface Owner {
   id: string;
@@ -37,6 +38,8 @@ export interface Property {
   owner: Owner;
   latitude: number;
   longitude: number;
+  rating?: number; // Average rating (1-5)
+  reviewCount?: number; // Total number of reviews
 }
 
 export type PropertyType = 'apartment' | 'house' | 'villa' | 'all';

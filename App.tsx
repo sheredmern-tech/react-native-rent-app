@@ -7,20 +7,23 @@ import { FavoritesProvider } from './src/context/FavoritesContext';
 import { UserProvider } from './src/context/UserContext';
 import { ComparisonProvider } from './src/context/ComparisonContext';
 import { LocationProvider } from './src/context/LocationContext';
+import { ReviewProvider } from './src/context/ReviewContext';
 
 export default function App() {
   return (
     <SafeAreaProvider>
       <UserProvider>
         <FavoritesProvider>
-          <ComparisonProvider>
-            <LocationProvider>
-              <NavigationContainer>
-                <RootNavigator />
-                <StatusBar style="auto" />
-              </NavigationContainer>
-            </LocationProvider>
-          </ComparisonProvider>
+          <ReviewProvider>
+            <ComparisonProvider>
+              <LocationProvider>
+                <NavigationContainer>
+                  <RootNavigator />
+                  <StatusBar style="auto" />
+                </NavigationContainer>
+              </LocationProvider>
+            </ComparisonProvider>
+          </ReviewProvider>
         </FavoritesProvider>
       </UserProvider>
     </SafeAreaProvider>

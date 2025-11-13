@@ -16,6 +16,9 @@ export type RootStackParamList = {
   Comparison: undefined;
   Map: undefined;
   NearbyProperties: undefined;
+  PropertyReviews: { propertyId: string; propertyTitle: string };
+  WriteReview: { propertyId: string; propertyTitle: string };
+  EditReview: { reviewId: string; propertyId: string };
 };
 
 export type RootStackNavigationProp<T extends keyof RootStackParamList> =

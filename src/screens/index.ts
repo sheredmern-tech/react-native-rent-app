@@ -11,3 +11,6 @@ export { PrivacyScreen } from './PrivacyScreen';
 export { ComparisonScreen } from './ComparisonScreen';
 export { MapScreen } from './MapScreen';
 export { NearbyPropertiesScreen } from './NearbyPropertiesScreen';
+export { PropertyReviewsScreen } from './PropertyReviewsScreen';
+export { WriteReviewScreen } from './WriteReviewScreen';
+export { EditReviewScreen } from './EditReviewScreen';
