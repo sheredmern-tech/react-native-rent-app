@@ -199,6 +199,37 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
             </View>
           </View>
 
+          {/* Property Features Section */}
+          <View style={styles.section}>
+            <Text style={styles.sectionHeading}>Property Features</Text>
+            <View style={styles.propertyFeaturesGrid}>
+              <View style={styles.propertyFeatureRow}>
+                <Ionicons
+                  name={property.furnished ? 'checkmark-circle' : 'close-circle'}
+                  size={24}
+                  color={property.furnished ? '#10B981' : '#EF4444'}
+                />
+                <Text style={styles.propertyFeatureLabel}>Furnished</Text>
+              </View>
+              <View style={styles.propertyFeatureRow}>
+                <Ionicons
+                  name={property.petFriendly ? 'checkmark-circle' : 'close-circle'}
+                  size={24}
+                  color={property.petFriendly ? '#10B981' : '#EF4444'}
+                />
+                <Text style={styles.propertyFeatureLabel}>Pet Friendly</Text>
+              </View>
+              <View style={styles.propertyFeatureRow}>
+                <Ionicons
+                  name={property.hasParking ? 'checkmark-circle' : 'close-circle'}
+                  size={24}
+                  color={property.hasParking ? '#10B981' : '#EF4444'}
+                />
+                <Text style={styles.propertyFeatureLabel}>Parking Available</Text>
+              </View>
+            </View>
+          </View>
+
           {/* Description */}
           <View style={styles.section}>
             <Text style={styles.sectionHeading}>About this property</Text>
@@ -430,6 +461,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     color: Colors.text.secondary,
+  },
+  propertyFeaturesGrid: {
+    gap: 16,
+  },
+  propertyFeatureRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingVertical: 8,
+  },
+  propertyFeatureLabel: {
+    fontSize: 16,
+    color: Colors.text.primary,
+    fontWeight: Fonts.weight.medium,
   },
   featuresGrid: {
     flexDirection: 'row',
