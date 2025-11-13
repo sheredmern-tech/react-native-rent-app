@@ -28,6 +28,12 @@ export const Fonts = {
     normal: 1.5,
     relaxed: 1.75,
   },
+
+  // Shorthand untuk backward compatibility
+  regular: 'System',   // ← TAMBAHKAN
+  medium: 'System',    // ← TAMBAHKAN
+  semiBold: 'System',  // ← TAMBAHKAN
+  bold: 'System',      // ← TAMBAHKAN
 };
 
 export type FontType = typeof Fonts;

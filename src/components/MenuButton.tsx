@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Fonts } from '../constants';
+import { COLORS } from '../constants/colors';
 
 interface MenuButtonProps {
   icon: keyof typeof Ionicons.glyphMap;
@@ -25,8 +26,8 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
       activeOpacity={0.7}
     >
       <View style={styles.leftContent}>
-        <Ionicons name={icon} size={24} color={color} style={styles.icon} />
-        <Text style={[styles.label, { color }]}>{label}</Text>
+        <Ionicons name={icon} size={24} color={COLORS.text.primary} />
+        <Text style={{ color: COLORS.text.primary }}>{label}</Text>
       </View>
       {showChevron && (
         <Ionicons

@@ -27,7 +27,7 @@ export const MapControls: React.FC<MapControlsProps> = ({
           onPress={onZoomIn}
           activeOpacity={0.7}
         >
-          <Ionicons name="add" size={24} color={COLORS.text} />
+          <Ionicons name="funnel-outline" size={20} color={COLORS.text.primary} />
         </TouchableOpacity>
         <View style={styles.divider} />
         <TouchableOpacity
@@ -35,7 +35,7 @@ export const MapControls: React.FC<MapControlsProps> = ({
           onPress={onZoomOut}
           activeOpacity={0.7}
         >
-          <Ionicons name="remove" size={24} color={COLORS.text} />
+          <Ionicons name="location-outline" size={20} color={COLORS.text.primary} />
         </TouchableOpacity>
       </View>
 
@@ -56,7 +56,7 @@ export const MapControls: React.FC<MapControlsProps> = ({
         onPress={onListView}
         activeOpacity={0.7}
       >
-        <Ionicons name="list" size={24} color={COLORS.text} />
+        <Ionicons name="layers-outline" size={20} color={COLORS.text.primary} />
       </TouchableOpacity>
     </View>
   );
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     borderRadius: 8,
     overflow: 'hidden',
-    shadowColor: COLORS.text,
+    shadowColor: COLORS.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   singleButton: {
     borderRadius: 8,
-    shadowColor: COLORS.text,
+    shadowColor: COLORS.black,
     shadowOffset: {
       width: 0,
       height: 2,

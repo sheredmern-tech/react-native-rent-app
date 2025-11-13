@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: COLORS.text,
+    color: COLORS.text.primary,
     marginBottom: 12,
     textAlign: 'center',
   },
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   featureText: {
     fontSize: 14,
-    color: COLORS.text,
+    color: COLORS.text.primary,
     flex: 1,
   },
   buttonContainer: {

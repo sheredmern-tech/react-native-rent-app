@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Fonts } from '../constants';
+import { COLORS } from '../constants/colors';
 
 interface SettingItemProps {
   icon: keyof typeof Ionicons.glyphMap;
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontFamily: Fonts.medium,
-    color: Colors.text,
+    color: COLORS.text.primary,
   },
   rightContent: {
     flexDirection: 'row',

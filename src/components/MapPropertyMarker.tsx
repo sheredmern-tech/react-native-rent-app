@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderWidth: 2,
     borderColor: COLORS.primary,
-    shadowColor: COLORS.text,
+    shadowColor: COLORS.black,
     shadowOffset: {
       width: 0,
       height: 2,

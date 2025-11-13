@@ -8,6 +8,7 @@ export const Colors = {
 
   background: '#FFFFFF',
   surface: '#F2F2F7',
+  card: '#FFFFFF',
 
   text: {
     primary: '#000000',
@@ -15,6 +16,10 @@ export const Colors = {
     disabled: '#8E8E93',
     inverse: '#FFFFFF',
   },
+
+  textPrimary: '#000000',
+  textSecondary: '#3C3C43',
+  textLight: '#8E8E93',
 
   border: '#C6C6C8',
   divider: '#E5E5EA',
@@ -35,7 +40,5 @@ export const Colors = {
   },
 };
 
-// Export as COLORS for backward compatibility
 export const COLORS = Colors;
-
 export type ColorType = typeof Colors;
