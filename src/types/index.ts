@@ -4,6 +4,7 @@ export * from './booking';
 export * from './recommendation';
 export * from './recentViews';
 export * from './share';
+export * from './theme';
 
 export interface Owner {
   id: string;
