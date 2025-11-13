@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 16,
-    fontWeight: Fonts.weight.semibold,
+    fontWeight: Fonts.weight.semiBold,
     color: Colors.text.primary,
   },
   clearButton: {
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   clearButtonText: {
     fontSize: 14,
     color: '#F44336',
-    fontWeight: Fonts.weight.semibold,
+    fontWeight: Fonts.weight.semiBold,
   },
   listContent: {
     paddingBottom: 24,
