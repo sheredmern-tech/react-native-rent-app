@@ -1,0 +1,1 @@
+export { mockProperties } from './mockProperties';
