@@ -30,11 +30,11 @@ export const MapPropertyCard: React.FC<MapPropertyCardProps> = ({
 
   const distance = userLocation
     ? calculateDistance(
-        userLocation.latitude,
-        userLocation.longitude,
-        property.latitude,
-        property.longitude
-      )
+      userLocation.latitude,
+      userLocation.longitude,
+      property.latitude,
+      property.longitude
+    )
     : null;
 
   return (
