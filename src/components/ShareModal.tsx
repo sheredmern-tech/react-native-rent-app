@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   preview: {
-    backgroundColor: Colors.gray[50],
+    backgroundColor: Colors.gray[100],
     padding: 16,
     borderRadius: 12,
     marginBottom: 20,
