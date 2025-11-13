@@ -18,6 +18,9 @@ import {
   PropertyReviewsScreen,
   WriteReviewScreen,
   EditReviewScreen,
+  ScheduleVisitScreen,
+  MyBookingsScreen,
+  BookingDetailScreen,
 } from '../screens';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -110,6 +113,21 @@ export const RootNavigator: React.FC = () => {
         name="EditReview"
         component={EditReviewScreen}
         options={{ title: 'Edit Review' }}
+      />
+      <Stack.Screen
+        name="ScheduleVisit"
+        component={ScheduleVisitScreen}
+        options={{ title: 'Schedule Visit' }}
+      />
+      <Stack.Screen
+        name="MyBookings"
+        component={MyBookingsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BookingDetail"
+        component={BookingDetailScreen}
+        options={{ title: 'Booking Details' }}
       />
     </Stack.Navigator>
   );

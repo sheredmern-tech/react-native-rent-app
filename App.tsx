@@ -8,6 +8,7 @@ import { UserProvider } from './src/context/UserContext';
 import { ComparisonProvider } from './src/context/ComparisonContext';
 import { LocationProvider } from './src/context/LocationContext';
 import { ReviewProvider } from './src/context/ReviewContext';
+import { BookingProvider } from './src/context/BookingContext';
 
 export default function App() {
   return (
@@ -15,14 +16,16 @@ export default function App() {
       <UserProvider>
         <FavoritesProvider>
           <ReviewProvider>
-            <ComparisonProvider>
-              <LocationProvider>
-                <NavigationContainer>
-                  <RootNavigator />
-                  <StatusBar style="auto" />
-                </NavigationContainer>
-              </LocationProvider>
-            </ComparisonProvider>
+            <BookingProvider>
+              <ComparisonProvider>
+                <LocationProvider>
+                  <NavigationContainer>
+                    <RootNavigator />
+                    <StatusBar style="auto" />
+                  </NavigationContainer>
+                </LocationProvider>
+              </ComparisonProvider>
+            </BookingProvider>
           </ReviewProvider>
         </FavoritesProvider>
       </UserProvider>

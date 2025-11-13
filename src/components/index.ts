@@ -23,3 +23,8 @@ export { StarRating } from './StarRating';
 export { ReviewCard } from './ReviewCard';
 export { RatingBreakdown } from './RatingBreakdown';
 export { ReviewFilter } from './ReviewFilter';
+export { BookingStatusBadge } from './BookingStatusBadge';
+export { VisitTypeSelector } from './VisitTypeSelector';
+export { DatePicker } from './DatePicker';
+export { TimeSlotPicker } from './TimeSlotPicker';
+export { BookingCard } from './BookingCard';

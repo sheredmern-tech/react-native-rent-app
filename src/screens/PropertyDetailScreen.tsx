@@ -447,15 +447,25 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
         </View>
       </ScrollView>
 
-      {/* Contact Button (Sticky) */}
+      {/* Action Buttons (Sticky) */}
       <SafeAreaView edges={['bottom']} style={styles.contactButtonContainer}>
-        <TouchableOpacity
-          style={styles.contactButton}
-          onPress={handleContact}
-          activeOpacity={0.8}
-        >
-          <Text style={styles.contactButtonText}>Contact Owner</Text>
-        </TouchableOpacity>
+        <View style={styles.actionButtonsRow}>
+          <TouchableOpacity
+            style={styles.scheduleButton}
+            onPress={() => navigation.navigate('ScheduleVisit', { property })}
+            activeOpacity={0.8}
+          >
+            <Ionicons name="calendar-outline" size={20} color={Colors.primary} />
+            <Text style={styles.scheduleButtonText}>Schedule Visit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.contactButton}
+            onPress={handleContact}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.contactButtonText}>Contact Owner</Text>
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
 
       {/* Fullscreen Image Viewer */}
@@ -714,7 +724,29 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: Colors.border,
   },
+  actionButtonsRow: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  scheduleButton: {
+    flex: 1,
+    backgroundColor: Colors.surface,
+    height: 54,
+    borderRadius: 12,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 8,
+    borderWidth: 2,
+    borderColor: Colors.primary,
+  },
+  scheduleButtonText: {
+    color: Colors.primary,
+    fontSize: Fonts.size.md,
+    fontWeight: Fonts.weight.bold,
+  },
   contactButton: {
+    flex: 1,
     backgroundColor: Colors.primary,
     height: 54,
     borderRadius: 12,
@@ -723,7 +755,7 @@ const styles = StyleSheet.create({
   },
   contactButtonText: {
     color: Colors.white,
-    fontSize: Fonts.size.lg,
+    fontSize: Fonts.size.md,
     fontWeight: Fonts.weight.bold,
   },
   mapHeader: {

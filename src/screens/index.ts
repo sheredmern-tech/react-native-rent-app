@@ -14,3 +14,6 @@ export { NearbyPropertiesScreen } from './NearbyPropertiesScreen';
 export { PropertyReviewsScreen } from './PropertyReviewsScreen';
 export { WriteReviewScreen } from './WriteReviewScreen';
 export { EditReviewScreen } from './EditReviewScreen';
+export { ScheduleVisitScreen } from './ScheduleVisitScreen';
+export { MyBookingsScreen } from './MyBookingsScreen';
+export { BookingDetailScreen } from './BookingDetailScreen';
