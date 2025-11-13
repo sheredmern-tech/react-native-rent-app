@@ -8,17 +8,64 @@ import {
   ScrollView,
   TextInput,
   Switch,
+  Animated,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { RootStackNavigationProp, PropertyType, Property } from '../types';
+import {
+  RootStackNavigationProp,
+  PropertyType,
+  Property,
+  SortOption,
+  SearchFilters,
+  FilterPreset,
+} from '../types';
 import { Colors, Fonts } from '../constants';
-import { SearchBar, FilterButton, PropertyCard, EmptyState } from '../components';
+import { SearchBar, FilterButton, PropertyCard, EmptyState, SortModal, FilterChip } from '../components';
 import { mockProperties } from '../data';
+import { sortProperties, getSortLabel } from '../utils/sortProperties';
 
 type SearchScreenProps = {
   navigation: RootStackNavigationProp<'Search'>;
 };
+
+const FILTER_PRESETS: FilterPreset[] = [
+  {
+    id: 'all',
+    name: 'All Properties',
+    filters: {},
+  },
+  {
+    id: 'budget',
+    name: 'Budget Friendly',
+    filters: {
+      maxPrice: '5000000',
+    },
+  },
+  {
+    id: 'family',
+    name: 'Family Homes',
+    filters: {
+      bedrooms: '3',
+      hasParking: true,
+    },
+  },
+  {
+    id: 'pet',
+    name: 'Pet Friendly',
+    filters: {
+      petFriendly: true,
+    },
+  },
+  {
+    id: 'luxury',
+    name: 'Luxury',
+    filters: {
+      minPrice: '15000000',
+      furnished: true,
+    },
+  },
+];
 
 export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -27,9 +74,15 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
   const [maxPrice, setMaxPrice] = useState('');
   const [selectedBedrooms, setSelectedBedrooms] = useState<string>('Any');
   const [availableOnly, setAvailableOnly] = useState(false);
+  const [furnished, setFurnished] = useState<boolean | null>(null);
+  const [petFriendly, setPetFriendly] = useState<boolean | null>(null);
+  const [hasParking, setHasParking] = useState<boolean | null>(null);
+  const [sortOption, setSortOption] = useState<SortOption>('newest');
+  const [showSortModal, setShowSortModal] = useState(false);
+  const [activePreset, setActivePreset] = useState<string>('all');
 
   const filteredProperties = useMemo(() => {
-    return mockProperties.filter((property) => {
+    let filtered = mockProperties.filter((property) => {
       // Search query filter
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
@@ -77,9 +130,38 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
         return false;
       }
 
+      // Furnished filter
+      if (furnished !== null && property.furnished !== furnished) {
+        return false;
+      }
+
+      // Pet friendly filter
+      if (petFriendly !== null && property.petFriendly !== petFriendly) {
+        return false;
+      }
+
+      // Parking filter
+      if (hasParking !== null && property.hasParking !== hasParking) {
+        return false;
+      }
+
       return true;
     });
-  }, [searchQuery, selectedType, minPrice, maxPrice, selectedBedrooms, availableOnly]);
+
+    // Apply sorting
+    return sortProperties(filtered, sortOption);
+  }, [
+    searchQuery,
+    selectedType,
+    minPrice,
+    maxPrice,
+    selectedBedrooms,
+    availableOnly,
+    furnished,
+    petFriendly,
+    hasParking,
+    sortOption,
+  ]);
 
   const handlePropertyPress = (propertyId: string) => {
     navigation.navigate('PropertyDetail', { propertyId });
@@ -92,6 +174,11 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
     setMaxPrice('');
     setSelectedBedrooms('Any');
     setAvailableOnly(false);
+    setFurnished(null);
+    setPetFriendly(null);
+    setHasParking(null);
+    setSortOption('newest');
+    setActivePreset('all');
   };
 
   const hasActiveFilters =
@@ -100,24 +187,89 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
     minPrice ||
     maxPrice ||
     selectedBedrooms !== 'Any' ||
-    availableOnly;
+    availableOnly ||
+    furnished !== null ||
+    petFriendly !== null ||
+    hasParking !== null;
 
   const formatPriceInput = (value: string) => {
-    // Remove non-numeric characters
     const numeric = value.replace(/\D/g, '');
-    // Format with thousand separator
     return numeric.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };
 
   const handleMinPriceChange = (value: string) => {
     const formatted = formatPriceInput(value);
     setMinPrice(formatted);
+    setActivePreset('');
   };
 
   const handleMaxPriceChange = (value: string) => {
     const formatted = formatPriceInput(value);
     setMaxPrice(formatted);
+    setActivePreset('');
   };
+
+  const handlePresetSelect = (preset: FilterPreset) => {
+    setActivePreset(preset.id);
+
+    // Clear all filters first
+    setSearchQuery('');
+    setSelectedType('all');
+    setMinPrice('');
+    setMaxPrice('');
+    setSelectedBedrooms('Any');
+    setAvailableOnly(false);
+    setFurnished(null);
+    setPetFriendly(null);
+    setHasParking(null);
+
+    // Apply preset filters
+    if (preset.filters.minPrice) {
+      setMinPrice(formatPriceInput(preset.filters.minPrice));
+    }
+    if (preset.filters.maxPrice) {
+      setMaxPrice(formatPriceInput(preset.filters.maxPrice));
+    }
+    if (preset.filters.bedrooms) {
+      setSelectedBedrooms(preset.filters.bedrooms);
+    }
+    if (preset.filters.furnished !== undefined) {
+      setFurnished(preset.filters.furnished);
+    }
+    if (preset.filters.petFriendly !== undefined) {
+      setPetFriendly(preset.filters.petFriendly);
+    }
+    if (preset.filters.hasParking !== undefined) {
+      setHasParking(preset.filters.hasParking);
+    }
+  };
+
+  const toggleFurnished = () => {
+    setFurnished((prev) => (prev === null ? true : prev === true ? false : null));
+    setActivePreset('');
+  };
+
+  const togglePetFriendly = () => {
+    setPetFriendly((prev) => (prev === null ? true : prev === true ? false : null));
+    setActivePreset('');
+  };
+
+  const toggleHasParking = () => {
+    setHasParking((prev) => (prev === null ? true : prev === true ? false : null));
+    setActivePreset('');
+  };
+
+  const activeFiltersCount = [
+    searchQuery,
+    selectedType !== 'all',
+    minPrice,
+    maxPrice,
+    selectedBedrooms !== 'Any',
+    availableOnly,
+    furnished !== null,
+    petFriendly !== null,
+    hasParking !== null,
+  ].filter(Boolean).length;
 
   const renderHeader = () => (
     <View style={styles.headerContainer}>
@@ -132,14 +284,72 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
         <Text style={styles.title}>Search Properties</Text>
       </View>
 
+      {/* Filter Presets */}
+      <View style={styles.presetsSection}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.presetsScroll}
+        >
+          {FILTER_PRESETS.map((preset) => (
+            <TouchableOpacity
+              key={preset.id}
+              style={[
+                styles.presetChip,
+                activePreset === preset.id && styles.presetChipActive,
+              ]}
+              onPress={() => handlePresetSelect(preset)}
+              activeOpacity={0.7}
+            >
+              <Text
+                style={[
+                  styles.presetChipText,
+                  activePreset === preset.id && styles.presetChipTextActive,
+                ]}
+              >
+                {preset.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+
       {/* Search Bar */}
       <View style={styles.searchSection}>
         <SearchBar
           value={searchQuery}
-          onChangeText={setSearchQuery}
+          onChangeText={(text) => {
+            setSearchQuery(text);
+            setActivePreset('');
+          }}
           placeholder="Search by location or title..."
         />
       </View>
+
+      {/* Sort Section */}
+      <View style={styles.sortSection}>
+        <TouchableOpacity
+          style={styles.sortButton}
+          onPress={() => setShowSortModal(true)}
+          activeOpacity={0.7}
+        >
+          <Ionicons name="swap-vertical" size={20} color={Colors.primary} />
+          <Text style={styles.sortButtonText}>{getSortLabel(sortOption)}</Text>
+          <Ionicons name="chevron-down" size={20} color={Colors.primary} />
+        </TouchableOpacity>
+      </View>
+
+      {/* Active Filters Bar */}
+      {hasActiveFilters && (
+        <View style={styles.activeFiltersSection}>
+          <Text style={styles.activeFiltersText}>
+            {activeFiltersCount} {activeFiltersCount === 1 ? 'filter' : 'filters'} active
+          </Text>
+          <TouchableOpacity onPress={handleClearFilters}>
+            <Text style={styles.clearAllText}>Clear all</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
       {/* Property Type Filter */}
       <View style={styles.filterSection}>
@@ -152,22 +362,34 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
           <FilterButton
             label="All"
             isActive={selectedType === 'all'}
-            onPress={() => setSelectedType('all')}
+            onPress={() => {
+              setSelectedType('all');
+              setActivePreset('');
+            }}
           />
           <FilterButton
             label="Apartment"
             isActive={selectedType === 'apartment'}
-            onPress={() => setSelectedType('apartment')}
+            onPress={() => {
+              setSelectedType('apartment');
+              setActivePreset('');
+            }}
           />
           <FilterButton
             label="House"
             isActive={selectedType === 'house'}
-            onPress={() => setSelectedType('house')}
+            onPress={() => {
+              setSelectedType('house');
+              setActivePreset('');
+            }}
           />
           <FilterButton
             label="Villa"
             isActive={selectedType === 'villa'}
-            onPress={() => setSelectedType('villa')}
+            onPress={() => {
+              setSelectedType('villa');
+              setActivePreset('');
+            }}
           />
         </ScrollView>
       </View>
@@ -213,27 +435,42 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
           <FilterButton
             label="Any"
             isActive={selectedBedrooms === 'Any'}
-            onPress={() => setSelectedBedrooms('Any')}
+            onPress={() => {
+              setSelectedBedrooms('Any');
+              setActivePreset('');
+            }}
           />
           <FilterButton
             label="1"
             isActive={selectedBedrooms === '1'}
-            onPress={() => setSelectedBedrooms('1')}
+            onPress={() => {
+              setSelectedBedrooms('1');
+              setActivePreset('');
+            }}
           />
           <FilterButton
             label="2"
             isActive={selectedBedrooms === '2'}
-            onPress={() => setSelectedBedrooms('2')}
+            onPress={() => {
+              setSelectedBedrooms('2');
+              setActivePreset('');
+            }}
           />
           <FilterButton
             label="3"
             isActive={selectedBedrooms === '3'}
-            onPress={() => setSelectedBedrooms('3')}
+            onPress={() => {
+              setSelectedBedrooms('3');
+              setActivePreset('');
+            }}
           />
           <FilterButton
             label="4+"
             isActive={selectedBedrooms === '4+'}
-            onPress={() => setSelectedBedrooms('4+')}
+            onPress={() => {
+              setSelectedBedrooms('4+');
+              setActivePreset('');
+            }}
           />
         </ScrollView>
       </View>
@@ -244,9 +481,37 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
           <Text style={styles.filterLabel}>Available Only</Text>
           <Switch
             value={availableOnly}
-            onValueChange={setAvailableOnly}
+            onValueChange={(value) => {
+              setAvailableOnly(value);
+              setActivePreset('');
+            }}
             trackColor={{ false: Colors.gray[300], true: Colors.primary }}
             thumbColor={Colors.white}
+          />
+        </View>
+      </View>
+
+      {/* Additional Filters */}
+      <View style={styles.filterSection}>
+        <Text style={styles.filterLabel}>Additional Filters</Text>
+        <View style={styles.filterChipsRow}>
+          <FilterChip
+            label="Furnished"
+            isActive={furnished}
+            onPress={toggleFurnished}
+            icon="home"
+          />
+          <FilterChip
+            label="Pet Friendly"
+            isActive={petFriendly}
+            onPress={togglePetFriendly}
+            icon="paw"
+          />
+          <FilterChip
+            label="Parking"
+            isActive={hasParking}
+            onPress={toggleHasParking}
+            icon="car"
           />
         </View>
       </View>
@@ -254,17 +519,9 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
       {/* Results Count */}
       <View style={styles.resultsHeader}>
         <Text style={styles.resultsCount}>
-          {filteredProperties.length} {filteredProperties.length === 1 ? 'property' : 'properties'} found
+          {filteredProperties.length}{' '}
+          {filteredProperties.length === 1 ? 'property' : 'properties'} found
         </Text>
-        {hasActiveFilters && (
-          <TouchableOpacity
-            onPress={handleClearFilters}
-            style={styles.clearButton}
-            activeOpacity={0.7}
-          >
-            <Text style={styles.clearButtonText}>Clear All</Text>
-          </TouchableOpacity>
-        )}
       </View>
     </View>
   );
@@ -293,6 +550,13 @@ export const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
         }
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
+      />
+
+      <SortModal
+        visible={showSortModal}
+        currentSort={sortOption}
+        onSelectSort={setSortOption}
+        onClose={() => setShowSortModal(false)}
       />
     </SafeAreaView>
   );
@@ -327,8 +591,78 @@ const styles = StyleSheet.create({
     fontWeight: Fonts.weight.bold,
     color: Colors.text.primary,
   },
+  presetsSection: {
+    marginTop: 8,
+    marginBottom: 16,
+  },
+  presetsScroll: {
+    gap: 8,
+  },
+  presetChip: {
+    height: 40,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+    backgroundColor: '#F3F4F6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  presetChipActive: {
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary,
+  },
+  presetChipText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#6B7280',
+  },
+  presetChipTextActive: {
+    color: 'white',
+  },
   searchSection: {
+    marginTop: 0,
+  },
+  sortSection: {
     marginTop: 16,
+  },
+  sortButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: Colors.primary,
+    backgroundColor: 'white',
+    gap: 8,
+  },
+  sortButtonText: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: Colors.primary,
+    flex: 1,
+  },
+  activeFiltersSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    backgroundColor: `${Colors.primary}10`,
+    borderRadius: 8,
+  },
+  activeFiltersText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: Colors.text.primary,
+  },
+  clearAllText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: Colors.primary,
   },
   filterSection: {
     marginTop: 24,
@@ -341,6 +675,11 @@ const styles = StyleSheet.create({
   },
   filterScrollView: {
     flexGrow: 0,
+  },
+  filterChipsRow: {
+    flexDirection: 'row',
+    gap: 8,
+    flexWrap: 'wrap',
   },
   priceInputRow: {
     flexDirection: 'row',
@@ -388,16 +727,5 @@ const styles = StyleSheet.create({
     fontSize: Fonts.size.md,
     fontWeight: Fonts.weight.semiBold,
     color: Colors.text.primary,
-  },
-  clearButton: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    backgroundColor: Colors.gray[100],
-    borderRadius: 8,
-  },
-  clearButtonText: {
-    fontSize: Fonts.size.sm,
-    fontWeight: Fonts.weight.semiBold,
-    color: Colors.primary,
   },
 });

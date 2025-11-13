@@ -222,6 +222,25 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
             </View>
           </View>
 
+          {/* Property Feature Badges */}
+          <View style={styles.propertyBadgesRow}>
+            {property.furnished && (
+              <View style={styles.propertyBadge}>
+                <Ionicons name="home" size={14} color={Colors.text.secondary} />
+              </View>
+            )}
+            {property.petFriendly && (
+              <View style={styles.propertyBadge}>
+                <Ionicons name="paw" size={14} color={Colors.text.secondary} />
+              </View>
+            )}
+            {property.hasParking && (
+              <View style={styles.propertyBadge}>
+                <Ionicons name="car" size={14} color={Colors.text.secondary} />
+              </View>
+            )}
+          </View>
+
           {/* Features */}
           {visibleFeatures.length > 0 && (
             <View style={styles.featuresContainer}>
@@ -393,6 +412,19 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.text.secondary,
     fontWeight: Fonts.weight.medium,
+  },
+  propertyBadgesRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 12,
+  },
+  propertyBadge: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: Colors.gray[100],
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   featuresContainer: {
     flexDirection: 'row',
