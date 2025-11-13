@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Property } from '../types';
-import { COLORS } from '../constants/colors';
-import { formatPrice } from '../utils/formatters';
+import { Colors } from '../constants/colors';
 import { useLocation } from '../context/LocationContext';
 import { calculateDistance, formatDistance } from '../utils/locationHelpers';
 
@@ -21,6 +20,10 @@ interface MapPropertyCardProps {
   property: Property;
   onPress: () => void;
 }
+
+const formatPrice = (price: number): string => {
+  return `Rp ${price.toLocaleString('id-ID')}`;
+};
 
 export const MapPropertyCard: React.FC<MapPropertyCardProps> = ({
   property,
@@ -44,7 +47,7 @@ export const MapPropertyCard: React.FC<MapPropertyCardProps> = ({
       activeOpacity={0.9}
     >
       <Image
-        source={{ uri: property.images[0] }}
+        source={{ uri: property.imageUrls[0] }}
         style={styles.image}
         resizeMode="cover"
       />
@@ -54,15 +57,15 @@ export const MapPropertyCard: React.FC<MapPropertyCardProps> = ({
         <View style={[styles.badge, styles.typeBadge]}>
           <Text style={styles.badgeText}>{property.type}</Text>
         </View>
-        {property.availableNow && (
+        {property.isAvailable && (
           <View style={[styles.badge, styles.availableBadge]}>
-            <Ionicons name="checkmark-circle" size={12} color={COLORS.white} />
+            <Ionicons name="checkmark-circle" size={12} color={Colors.white} />
             <Text style={styles.badgeText}>Tersedia</Text>
           </View>
         )}
         {distance !== null && (
           <View style={[styles.badge, styles.distanceBadge]}>
-            <Ionicons name="location" size={12} color={COLORS.white} />
+            <Ionicons name="location" size={12} color={Colors.white} />
             <Text style={styles.badgeText}>{formatDistance(distance)}</Text>
           </View>
         )}
@@ -75,7 +78,7 @@ export const MapPropertyCard: React.FC<MapPropertyCardProps> = ({
         </Text>
 
         <View style={styles.locationRow}>
-          <Ionicons name="location-outline" size={14} color={COLORS.textLight} />
+          <Ionicons name="location-outline" size={14} color={Colors.text.secondary} />
           <Text style={styles.location} numberOfLines={1}>
             {property.location}
           </Text>
@@ -83,16 +86,16 @@ export const MapPropertyCard: React.FC<MapPropertyCardProps> = ({
 
         <View style={styles.features}>
           <View style={styles.feature}>
-            <Ionicons name="bed-outline" size={16} color={COLORS.textLight} />
+            <Ionicons name="bed-outline" size={16} color={Colors.text.secondary} />
             <Text style={styles.featureText}>{property.bedrooms}</Text>
           </View>
           <View style={styles.feature}>
-            <Ionicons name="water-outline" size={16} color={COLORS.textLight} />
+            <Ionicons name="water-outline" size={16} color={Colors.text.secondary} />
             <Text style={styles.featureText}>{property.bathrooms}</Text>
           </View>
           <View style={styles.feature}>
-            <Ionicons name="expand-outline" size={16} color={COLORS.textLight} />
-            <Text style={styles.featureText}>{property.size} m²</Text>
+            <Ionicons name="expand-outline" size={16} color={Colors.text.secondary} />
+            <Text style={styles.featureText}>{property.area} m²</Text>
           </View>
         </View>
 
@@ -104,7 +107,7 @@ export const MapPropertyCard: React.FC<MapPropertyCardProps> = ({
 
           <TouchableOpacity style={styles.detailButton} onPress={onPress}>
             <Text style={styles.detailButtonText}>Lihat Detail</Text>
-            <Ionicons name="chevron-forward" size={16} color={COLORS.white} />
+            <Ionicons name="chevron-forward" size={16} color={Colors.white} />
           </TouchableOpacity>
         </View>
       </View>
@@ -115,10 +118,10 @@ export const MapPropertyCard: React.FC<MapPropertyCardProps> = ({
 const styles = StyleSheet.create({
   card: {
     width: CARD_WIDTH,
-    backgroundColor: COLORS.white,
+    backgroundColor: Colors.white,
     borderRadius: 16,
     overflow: 'hidden',
-    shadowColor: COLORS.text,
+    shadowColor: Colors.text.primary,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -130,7 +133,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 180,
-    backgroundColor: COLORS.background,
+    backgroundColor: Colors.background,
   },
   badgeContainer: {
     position: 'absolute',
@@ -150,18 +153,18 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   typeBadge: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: Colors.primary,
   },
   availableBadge: {
-    backgroundColor: COLORS.success,
+    backgroundColor: Colors.success,
   },
   distanceBadge: {
-    backgroundColor: COLORS.info,
+    backgroundColor: Colors.info,
   },
   badgeText: {
     fontSize: 11,
     fontWeight: '600',
-    color: COLORS.white,
+    color: Colors.white,
   },
   content: {
     padding: 16,
@@ -169,7 +172,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: COLORS.text,
+    color: Colors.text.primary,
     marginBottom: 8,
   },
   locationRow: {
@@ -180,7 +183,7 @@ const styles = StyleSheet.create({
   },
   location: {
     fontSize: 14,
-    color: COLORS.textLight,
+    color: Colors.text.secondary,
     flex: 1,
   },
   features: {
@@ -195,7 +198,7 @@ const styles = StyleSheet.create({
   },
   featureText: {
     fontSize: 14,
-    color: COLORS.textLight,
+    color: Colors.text.secondary,
   },
   footer: {
     flexDirection: 'row',
@@ -205,17 +208,17 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: COLORS.primary,
+    color: Colors.primary,
   },
   period: {
     fontSize: 12,
-    color: COLORS.textLight,
+    color: Colors.text.secondary,
     marginTop: 2,
   },
   detailButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.primary,
+    backgroundColor: Colors.primary,
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 8,
@@ -224,6 +227,6 @@ const styles = StyleSheet.create({
   detailButtonText: {
     fontSize: 14,
     fontWeight: '600',
-    color: COLORS.white,
+    color: Colors.white,
   },
 });

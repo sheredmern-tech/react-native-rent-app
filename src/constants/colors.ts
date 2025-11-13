@@ -35,4 +35,7 @@ export const Colors = {
   },
 };
 
+// Export as COLORS for backward compatibility
+export const COLORS = Colors;
+
 export type ColorType = typeof Colors;

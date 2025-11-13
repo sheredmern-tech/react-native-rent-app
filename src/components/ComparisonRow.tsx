@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     minHeight: 50,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
   },
   alternateRow: {
     backgroundColor: '#F5F5F5',
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
   },
   labelText: {
     fontSize: 14,
-    fontFamily: Fonts.medium,
-    color: Colors.text,
+    fontFamily: Fonts.family.medium,
+    color: Colors.text.primary,
   },
   valueColumn: {
     width: '20%',
@@ -111,12 +111,12 @@ const styles = StyleSheet.create({
   },
   valueText: {
     fontSize: 14,
-    fontFamily: Fonts.regular,
-    color: Colors.text,
+    fontFamily: Fonts.family.regular,
+    color: Colors.text.primary,
     textAlign: 'center',
   },
   highlightedText: {
     color: '#2E7D32',
-    fontFamily: Fonts.semiBold,
+    fontFamily: Fonts.family.semiBold,
   },
 });

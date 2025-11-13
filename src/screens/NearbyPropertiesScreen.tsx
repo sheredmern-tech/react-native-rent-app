@@ -12,7 +12,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackParamList } from '../types/navigation';
 import { Property } from '../types';
-import { COLORS } from '../constants/colors';
+import { Colors } from '../constants/colors';
 import { mockProperties } from '../data/mockProperties';
 import { PropertyCard } from '../components/PropertyCard';
 import { EmptyState } from '../components/EmptyState';
@@ -119,7 +119,7 @@ export const NearbyPropertiesScreen: React.FC<Props> = ({ navigation }) => {
         {userLocation && renderDistanceFilter()}
 
         <View style={styles.resultInfo}>
-          <Ionicons name="location" size={20} color={COLORS.primary} />
+          <Ionicons name="location" size={20} color={Colors.primary} />
           <Text style={styles.resultText}>
             {properties.length} properti terdekat
             {!userLocation && ' (Izinkan akses lokasi untuk filter jarak)'}
@@ -131,7 +131,7 @@ export const NearbyPropertiesScreen: React.FC<Props> = ({ navigation }) => {
             style={styles.enableLocationButton}
             onPress={() => setShowPermissionPrompt(true)}
           >
-            <Ionicons name="location-outline" size={20} color={COLORS.white} />
+            <Ionicons name="location-outline" size={20} color={Colors.white} />
             <Text style={styles.enableLocationText}>Aktifkan Lokasi</Text>
           </TouchableOpacity>
         )}
@@ -147,12 +147,12 @@ export const NearbyPropertiesScreen: React.FC<Props> = ({ navigation }) => {
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
-            <Ionicons name="arrow-back" size={24} color={COLORS.text} />
+            <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Properti Terdekat</Text>
         </View>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={COLORS.primary} />
+          <ActivityIndicator size="large" color={Colors.primary} />
           <Text style={styles.loadingText}>Memuat properti...</Text>
         </View>
       </SafeAreaView>
@@ -166,11 +166,11 @@ export const NearbyPropertiesScreen: React.FC<Props> = ({ navigation }) => {
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Ionicons name="arrow-back" size={24} color={COLORS.text} />
+          <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Properti Terdekat</Text>
         <TouchableOpacity style={styles.mapButton} onPress={handleMapView}>
-          <Ionicons name="map" size={24} color={COLORS.primary} />
+          <Ionicons name="map" size={24} color={Colors.primary} />
         </TouchableOpacity>
       </View>
 
@@ -207,16 +207,16 @@ export const NearbyPropertiesScreen: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: Colors.background,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 16,
-    backgroundColor: COLORS.white,
+    backgroundColor: Colors.white,
     borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
+    borderBottomColor: Colors.border,
   },
   backButton: {
     marginRight: 16,
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 20,
     fontWeight: 'bold',
-    color: COLORS.text,
+    color: Colors.text.primary,
   },
   mapButton: {
     marginLeft: 16,
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 12,
     fontSize: 16,
-    color: COLORS.textLight,
+    color: Colors.text.secondary,
   },
   listContent: {
     padding: 16,
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
   filterLabel: {
     fontSize: 14,
     fontWeight: '600',
-    color: COLORS.text,
+    color: Colors.text.primary,
     marginBottom: 8,
   },
   filterButtons: {
@@ -263,27 +263,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: COLORS.white,
+    backgroundColor: Colors.white,
     borderWidth: 1,
-    borderColor: COLORS.border,
+    borderColor: Colors.border,
   },
   filterButtonActive: {
-    backgroundColor: COLORS.primary,
-    borderColor: COLORS.primary,
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary,
   },
   filterButtonText: {
     fontSize: 14,
     fontWeight: '600',
-    color: COLORS.text,
+    color: Colors.text.primary,
   },
   filterButtonTextActive: {
-    color: COLORS.white,
+    color: Colors.white,
   },
   resultInfo: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 12,
-    backgroundColor: `${COLORS.primary}10`,
+    backgroundColor: `${Colors.primary}10`,
     borderRadius: 12,
     gap: 8,
     marginBottom: 12,
@@ -291,13 +291,13 @@ const styles = StyleSheet.create({
   resultText: {
     flex: 1,
     fontSize: 14,
-    color: COLORS.text,
+    color: Colors.text.primary,
   },
   enableLocationButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: COLORS.primary,
+    backgroundColor: Colors.primary,
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 12,
@@ -306,6 +306,6 @@ const styles = StyleSheet.create({
   enableLocationText: {
     fontSize: 16,
     fontWeight: '600',
-    color: COLORS.white,
+    color: Colors.white,
   },
 });

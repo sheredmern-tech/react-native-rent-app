@@ -54,7 +54,10 @@ export const ComparisonScreen: React.FC = () => {
   };
 
   const handleViewDetail = (propertyId: string) => {
-    navigation.navigate('PropertyDetail', { propertyId });
+    const property = mockProperties.find(p => p.id === propertyId);
+    if (property) {
+      navigation.navigate('PropertyDetail', { property });
+    }
   };
 
   const handleBrowseProperties = () => {
@@ -69,7 +72,7 @@ export const ComparisonScreen: React.FC = () => {
           <Ionicons
             name="git-compare-outline"
             size={80}
-            color={Colors.textSecondary}
+            color={Colors.text.secondary}
           />
           <Text style={styles.emptyTitle}>
             Belum Ada Properti untuk Dibandingkan
@@ -284,21 +287,21 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 20,
-    fontFamily: Fonts.bold,
-    color: Colors.text,
+    fontFamily: Fonts.family.bold,
+    color: Colors.text.primary,
     textAlign: 'center',
     marginTop: 24,
     marginBottom: 12,
   },
   emptyDescription: {
     fontSize: 14,
-    fontFamily: Fonts.regular,
-    color: Colors.textSecondary,
+    fontFamily: Fonts.family.regular,
+    color: Colors.text.secondary,
     textAlign: 'center',
     marginBottom: 32,
   },
   emptyButton: {
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
     borderWidth: 2,
     borderColor: Colors.primary,
     borderRadius: 12,
@@ -307,27 +310,27 @@ const styles = StyleSheet.create({
   },
   emptyButtonText: {
     fontSize: 16,
-    fontFamily: Fonts.semiBold,
+    fontFamily: Fonts.family.semiBold,
     color: Colors.primary,
   },
   header: {
     paddingHorizontal: 16,
     paddingTop: 16,
     paddingBottom: 20,
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
   },
   headerTitle: {
     fontSize: 24,
-    fontFamily: Fonts.bold,
-    color: Colors.text,
+    fontFamily: Fonts.family.bold,
+    color: Colors.text.primary,
     marginBottom: 4,
   },
   headerSubtitle: {
     fontSize: 14,
-    fontFamily: Fonts.regular,
-    color: Colors.textSecondary,
+    fontFamily: Fonts.family.regular,
+    color: Colors.text.secondary,
   },
   clearButton: {
     marginTop: 12,
@@ -335,8 +338,8 @@ const styles = StyleSheet.create({
   },
   clearButtonText: {
     fontSize: 14,
-    fontFamily: Fonts.semiBold,
-    color: Colors.error,
+    fontFamily: Fonts.family.semiBold,
+    color: Colors.danger,
   },
   cardsScrollView: {
     marginVertical: 20,
@@ -347,7 +350,7 @@ const styles = StyleSheet.create({
   propertyCard: {
     width: 250,
     height: 300,
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
     borderRadius: 16,
     marginRight: 16,
     shadowColor: '#000',
@@ -366,7 +369,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 8,
     right: 8,
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
     borderRadius: 14,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -379,25 +382,25 @@ const styles = StyleSheet.create({
   },
   propertyTitle: {
     fontSize: 16,
-    fontFamily: Fonts.semiBold,
-    color: Colors.text,
+    fontFamily: Fonts.family.semiBold,
+    color: Colors.text.primary,
     marginBottom: 6,
     lineHeight: 22,
   },
   propertyLocation: {
     fontSize: 13,
-    fontFamily: Fonts.regular,
-    color: Colors.textSecondary,
+    fontFamily: Fonts.family.regular,
+    color: Colors.text.secondary,
     marginBottom: 12,
   },
   propertyPrice: {
     fontSize: 18,
-    fontFamily: Fonts.bold,
+    fontFamily: Fonts.family.bold,
     color: Colors.primary,
   },
   tableContainer: {
     marginHorizontal: 16,
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
     borderRadius: 12,
     overflow: 'hidden',
     borderWidth: 1,
@@ -405,8 +408,8 @@ const styles = StyleSheet.create({
   },
   tableTitle: {
     fontSize: 18,
-    fontFamily: Fonts.semiBold,
-    color: Colors.text,
+    fontFamily: Fonts.family.semiBold,
+    color: Colors.text.primary,
     padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
@@ -416,7 +419,7 @@ const styles = StyleSheet.create({
     minHeight: 80,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
   },
   alternateRow: {
     backgroundColor: '#F5F5F5',
@@ -430,8 +433,8 @@ const styles = StyleSheet.create({
   },
   labelText: {
     fontSize: 14,
-    fontFamily: Fonts.medium,
-    color: Colors.text,
+    fontFamily: Fonts.family.medium,
+    color: Colors.text.primary,
   },
   featuresColumn: {
     width: '20%',
@@ -444,15 +447,15 @@ const styles = StyleSheet.create({
   },
   featureItem: {
     fontSize: 12,
-    fontFamily: Fonts.regular,
-    color: Colors.text,
+    fontFamily: Fonts.family.regular,
+    color: Colors.text.primary,
     marginBottom: 4,
     textAlign: 'left',
   },
   noFeatures: {
     fontSize: 14,
-    fontFamily: Fonts.regular,
-    color: Colors.textSecondary,
+    fontFamily: Fonts.family.regular,
+    color: Colors.text.secondary,
     textAlign: 'center',
   },
   actionContainer: {
@@ -475,8 +478,8 @@ const styles = StyleSheet.create({
   },
   detailButtonText: {
     fontSize: 15,
-    fontFamily: Fonts.semiBold,
-    color: Colors.card,
+    fontFamily: Fonts.family.semiBold,
+    color: Colors.text.inverse,
   },
   bottomSpacing: {
     height: 32,

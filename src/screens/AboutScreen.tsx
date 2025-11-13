@@ -78,7 +78,7 @@ export const AboutScreen: React.FC = () => {
               <Ionicons
                 name="chevron-forward"
                 size={20}
-                color={Colors.textSecondary}
+                color={Colors.text.secondary}
               />
             </TouchableOpacity>
             <TouchableOpacity
@@ -94,7 +94,7 @@ export const AboutScreen: React.FC = () => {
               <Ionicons
                 name="chevron-forward"
                 size={20}
-                color={Colors.textSecondary}
+                color={Colors.text.secondary}
               />
             </TouchableOpacity>
           </View>
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     paddingVertical: 40,
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.white,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
   },
@@ -197,14 +197,14 @@ const styles = StyleSheet.create({
   },
   appName: {
     fontSize: 28,
-    fontFamily: Fonts.bold,
-    color: Colors.text,
+    fontWeight: Fonts.weight.bold,
+    color: Colors.text.primary,
     marginBottom: 4,
   },
   version: {
     fontSize: 14,
-    fontFamily: Fonts.regular,
-    color: Colors.textSecondary,
+    fontWeight: Fonts.weight.regular,
+    color: Colors.text.secondary,
   },
   descriptionContainer: {
     paddingHorizontal: 24,
@@ -212,8 +212,8 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 15,
-    fontFamily: Fonts.regular,
-    color: Colors.text,
+    fontWeight: Fonts.weight.regular,
+    color: Colors.text.primary,
     lineHeight: 24,
     textAlign: 'center',
   },
@@ -223,14 +223,14 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 12,
-    fontFamily: Fonts.semiBold,
-    color: Colors.textSecondary,
+    fontWeight: Fonts.weight.semiBold,
+    color: Colors.text.secondary,
     letterSpacing: 0.5,
     marginBottom: 12,
     marginLeft: 4,
   },
   contactContainer: {
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.white,
     borderRadius: 12,
     overflow: 'hidden',
     borderWidth: 1,
@@ -250,21 +250,21 @@ const styles = StyleSheet.create({
   },
   contactLabel: {
     fontSize: 12,
-    fontFamily: Fonts.regular,
-    color: Colors.textSecondary,
+    fontWeight: Fonts.weight.regular,
+    color: Colors.text.secondary,
     marginBottom: 2,
   },
   contactValue: {
     fontSize: 15,
-    fontFamily: Fonts.medium,
-    color: Colors.text,
+    fontWeight: Fonts.weight.medium,
+    color: Colors.text.primary,
   },
   socialContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 24,
     paddingVertical: 20,
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.white,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: Colors.border,
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.white,
     borderRadius: 12,
     paddingVertical: 16,
     borderWidth: 1,
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
   },
   actionButtonText: {
     fontSize: 15,
-    fontFamily: Fonts.semiBold,
+    fontWeight: Fonts.weight.semiBold,
     color: Colors.primary,
     marginLeft: 8,
   },
@@ -309,14 +309,14 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 12,
-    fontFamily: Fonts.regular,
-    color: Colors.textSecondary,
+    fontWeight: Fonts.weight.regular,
+    color: Colors.text.secondary,
     marginBottom: 4,
   },
   footerSubtext: {
     fontSize: 12,
-    fontFamily: Fonts.regular,
-    color: Colors.textSecondary,
+    fontWeight: Fonts.weight.regular,
+    color: Colors.text.secondary,
   },
   bottomSpacing: {
     height: 20,

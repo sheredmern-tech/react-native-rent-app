@@ -162,7 +162,7 @@ export const SettingsScreen: React.FC = () => {
                   value={settings.notifications.push}
                   onValueChange={handlePushNotifications}
                   trackColor={{ false: Colors.border, true: Colors.primary }}
-                  thumbColor={Colors.card}
+                  thumbColor={Colors.surface}
                 />
               }
             />
@@ -174,7 +174,7 @@ export const SettingsScreen: React.FC = () => {
                   value={settings.notifications.email}
                   onValueChange={handleEmailNotifications}
                   trackColor={{ false: Colors.border, true: Colors.primary }}
-                  thumbColor={Colors.card}
+                  thumbColor={Colors.surface}
                 />
               }
             />
@@ -218,7 +218,7 @@ export const SettingsScreen: React.FC = () => {
                   value={settings.darkMode}
                   onValueChange={handleDarkMode}
                   trackColor={{ false: Colors.border, true: Colors.primary }}
-                  thumbColor={Colors.card}
+                  thumbColor={Colors.surface}
                 />
               }
             />
@@ -256,14 +256,14 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 12,
-    fontFamily: Fonts.semiBold,
-    color: Colors.textSecondary,
+    fontFamily: Fonts.family.semiBold,
+    color: Colors.text.secondary,
     letterSpacing: 0.5,
     marginBottom: 8,
     marginLeft: 4,
   },
   sectionContent: {
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
     borderRadius: 12,
     overflow: 'hidden',
     borderWidth: 1,

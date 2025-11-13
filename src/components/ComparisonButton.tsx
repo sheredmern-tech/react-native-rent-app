@@ -70,7 +70,7 @@ export const ComparisonButton: React.FC = () => {
         onPress={() => navigation.navigate('Comparison')}
         activeOpacity={0.8}
       >
-        <Ionicons name="git-compare-outline" size={28} color={Colors.card} />
+        <Ionicons name="git-compare-outline" size={28} color="#FFFFFF" />
         <View style={styles.badge}>
           <Text style={styles.badgeText}>{count}</Text>
         </View>
@@ -110,11 +110,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: Colors.card,
+    borderColor: '#FFFFFF',
   },
   badgeText: {
     fontSize: 12,
-    fontFamily: Fonts.bold,
-    color: Colors.card,
+    fontFamily: Fonts.family.bold,
+    color: '#FFFFFF',
   },
 });

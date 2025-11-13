@@ -113,7 +113,7 @@ export const ProfileScreen: React.FC = () => {
               onPress={handleEditProfile}
               activeOpacity={0.7}
             >
-              <Ionicons name="camera" size={16} color={Colors.card} />
+              <Ionicons name="camera" size={16} color={Colors.text.inverse} />
             </TouchableOpacity>
           </View>
 
@@ -168,7 +168,7 @@ export const ProfileScreen: React.FC = () => {
             icon="log-out-outline"
             label="Logout"
             onPress={handleLogout}
-            color={Colors.error}
+            color={Colors.danger}
             showChevron={false}
           />
         </View>
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 32,
     paddingHorizontal: 20,
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
   },
   avatarContainer: {
     position: 'relative',
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 3,
-    borderColor: Colors.card,
+    borderColor: Colors.surface,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -214,8 +214,8 @@ const styles = StyleSheet.create({
   },
   avatarText: {
     fontSize: 36,
-    fontFamily: Fonts.bold,
-    color: Colors.card,
+    fontFamily: Fonts.family.bold,
+    color: Colors.text.inverse,
   },
   editAvatarButton: {
     position: 'absolute',
@@ -228,24 +228,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: Colors.card,
+    borderColor: Colors.surface,
   },
   userName: {
     fontSize: 24,
-    fontFamily: Fonts.bold,
-    color: Colors.text,
+    fontFamily: Fonts.family.bold,
+    color: Colors.text.primary,
     marginBottom: 4,
   },
   userEmail: {
     fontSize: 14,
-    fontFamily: Fonts.regular,
-    color: Colors.textSecondary,
+    fontFamily: Fonts.family.regular,
+    color: Colors.text.secondary,
     marginBottom: 8,
   },
   memberSince: {
     fontSize: 12,
-    fontFamily: Fonts.regular,
-    color: Colors.textSecondary,
+    fontFamily: Fonts.family.regular,
+    color: Colors.text.secondary,
   },
   statsContainer: {
     flexDirection: 'row',
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
     borderRadius: 12,
     padding: 20,
     alignItems: 'center',
@@ -269,15 +269,15 @@ const styles = StyleSheet.create({
   },
   statNumber: {
     fontSize: 28,
-    fontFamily: Fonts.bold,
-    color: Colors.text,
+    fontFamily: Fonts.family.bold,
+    color: Colors.text.primary,
     marginTop: 8,
     marginBottom: 4,
   },
   statLabel: {
     fontSize: 12,
-    fontFamily: Fonts.regular,
-    color: Colors.textSecondary,
+    fontFamily: Fonts.family.regular,
+    color: Colors.text.secondary,
     textAlign: 'center',
   },
   menuContainer: {

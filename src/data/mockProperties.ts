@@ -9,6 +9,8 @@ export const mockProperties: Property[] = [
     bedrooms: 2,
     bathrooms: 2,
     area: 75,
+    latitude: -6.2615,
+    longitude: 106.8166,
     imageUrls: [
       'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop',
@@ -41,6 +43,8 @@ export const mockProperties: Property[] = [
     bedrooms: 4,
     bathrooms: 4,
     area: 200,
+    latitude: -8.6917,
+    longitude: 115.1689,
     imageUrls: [
       'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop',
@@ -72,6 +76,8 @@ export const mockProperties: Property[] = [
     bedrooms: 1,
     bathrooms: 1,
     area: 35,
+    latitude: -6.2088,
+    longitude: 106.8228,
     imageUrls: [
       'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=800&h=600&fit=crop',
@@ -102,6 +108,8 @@ export const mockProperties: Property[] = [
     bedrooms: 3,
     bathrooms: 3,
     area: 150,
+    latitude: -7.2844,
+    longitude: 112.7378,
     imageUrls: [
       'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=800&h=600&fit=crop',
@@ -133,6 +141,8 @@ export const mockProperties: Property[] = [
     bedrooms: 3,
     bathrooms: 2,
     area: 120,
+    latitude: -6.2674,
+    longitude: 106.7845,
     imageUrls: [
       'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop',
@@ -165,6 +175,8 @@ export const mockProperties: Property[] = [
     bedrooms: 2,
     bathrooms: 2,
     area: 90,
+    latitude: -8.5069,
+    longitude: 115.2625,
     imageUrls: [
       'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&h=600&fit=crop',
@@ -196,6 +208,8 @@ export const mockProperties: Property[] = [
     bedrooms: 2,
     bathrooms: 1,
     area: 60,
+    latitude: -6.3017,
+    longitude: 106.6391,
     imageUrls: [
       'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&h=600&fit=crop',
@@ -227,6 +241,8 @@ export const mockProperties: Property[] = [
     bedrooms: 3,
     bathrooms: 3,
     area: 180,
+    latitude: -8.7036,
+    longitude: 115.2625,
     imageUrls: [
       'https://images.unsplash.com/photo-1602343168117-bb8ffe3e2e9f?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1591825729269-caeb344f6df2?w=800&h=600&fit=crop',
@@ -259,6 +275,8 @@ export const mockProperties: Property[] = [
     bedrooms: 2,
     bathrooms: 2,
     area: 80,
+    latitude: -7.2982,
+    longitude: 112.6790,
     imageUrls: [
       'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1565183997392-2f8c9e5c6b0b?w=800&h=600&fit=crop',
@@ -290,6 +308,8 @@ export const mockProperties: Property[] = [
     bedrooms: 3,
     bathrooms: 3,
     area: 140,
+    latitude: -6.2345,
+    longitude: 106.8107,
     imageUrls: [
       'https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1606744824163-985d376605aa?w=800&h=600&fit=crop',
@@ -322,6 +342,8 @@ export const mockProperties: Property[] = [
     bedrooms: 1,
     bathrooms: 1,
     area: 30,
+    latitude: -6.3915,
+    longitude: 106.8262,
     imageUrls: [
       'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?w=800&h=600&fit=crop',
@@ -352,6 +374,8 @@ export const mockProperties: Property[] = [
     bedrooms: 4,
     bathrooms: 4,
     area: 190,
+    latitude: -8.6483,
+    longitude: 115.1385,
     imageUrls: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800&h=600&fit=crop',

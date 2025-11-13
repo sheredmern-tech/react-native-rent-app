@@ -14,7 +14,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackParamList } from '../types/navigation';
 import { Property } from '../types';
-import { COLORS } from '../constants/colors';
+import { Colors } from '../constants/colors';
 import { mockProperties } from '../data/mockProperties';
 import { MapPropertyMarker } from '../components/MapPropertyMarker';
 import { MapPropertyCard } from '../components/MapPropertyCard';
@@ -141,7 +141,7 @@ export const MapScreen: React.FC<Props> = ({ navigation }) => {
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Ionicons name="arrow-back" size={24} color={COLORS.text} />
+          <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
         </TouchableOpacity>
 
         <View style={styles.headerContent}>
@@ -203,12 +203,12 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: COLORS.white,
+    backgroundColor: Colors.white,
     paddingHorizontal: 16,
     paddingVertical: 12,
     flexDirection: 'row',
     alignItems: 'center',
-    shadowColor: COLORS.text,
+    shadowColor: Colors.text.primary,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: COLORS.white,
+    backgroundColor: Colors.white,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
@@ -232,11 +232,11 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: COLORS.text,
+    color: Colors.text.primary,
   },
   headerSubtitle: {
     fontSize: 12,
-    color: COLORS.textLight,
+    color: Colors.text.secondary,
     marginTop: 2,
   },
   bottomSheet: {
@@ -244,12 +244,12 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: COLORS.white,
+    backgroundColor: Colors.white,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingTop: 12,
     paddingBottom: Platform.OS === 'ios' ? 34 : 20,
-    shadowColor: COLORS.text,
+    shadowColor: Colors.text.primary,
     shadowOffset: {
       width: 0,
       height: -2,
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
   sheetHandle: {
     width: 40,
     height: 4,
-    backgroundColor: COLORS.border,
+    backgroundColor: Colors.border,
     borderRadius: 2,
     alignSelf: 'center',
     marginBottom: 16,

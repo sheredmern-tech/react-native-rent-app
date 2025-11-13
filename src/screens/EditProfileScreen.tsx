@@ -145,7 +145,7 @@ export const EditProfileScreen: React.FC = () => {
                   setFormData({ ...formData, name: text })
                 }
                 placeholder="Enter your name"
-                placeholderTextColor={Colors.textSecondary}
+                placeholderTextColor={Colors.text.secondary}
                 autoCapitalize="words"
               />
               {errors.name && (
@@ -163,7 +163,7 @@ export const EditProfileScreen: React.FC = () => {
                   setFormData({ ...formData, email: text })
                 }
                 placeholder="Enter your email"
-                placeholderTextColor={Colors.textSecondary}
+                placeholderTextColor={Colors.text.secondary}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -183,7 +183,7 @@ export const EditProfileScreen: React.FC = () => {
                   setFormData({ ...formData, phone: text })
                 }
                 placeholder="+62 812-3456-7890"
-                placeholderTextColor={Colors.textSecondary}
+                placeholderTextColor={Colors.text.secondary}
                 keyboardType="phone-pad"
               />
               {errors.phone && (
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
   avatarSection: {
     alignItems: 'center',
     paddingVertical: 32,
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
   },
@@ -247,8 +247,8 @@ const styles = StyleSheet.create({
   },
   avatarText: {
     fontSize: 36,
-    fontFamily: Fonts.bold,
-    color: Colors.card,
+    fontFamily: Fonts.family.bold,
+    color: Colors.text.inverse,
   },
   changeAvatarButton: {
     flexDirection: 'row',
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
   },
   changeAvatarText: {
     fontSize: 14,
-    fontFamily: Fonts.semiBold,
+    fontFamily: Fonts.family.semiBold,
     color: Colors.primary,
     marginLeft: 6,
   },
@@ -271,35 +271,35 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontFamily: Fonts.semiBold,
-    color: Colors.text,
+    fontFamily: Fonts.family.semiBold,
+    color: Colors.text.primary,
     marginBottom: 8,
   },
   input: {
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
     borderWidth: 1,
     borderColor: Colors.border,
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 16,
-    fontFamily: Fonts.regular,
-    color: Colors.text,
+    fontFamily: Fonts.family.regular,
+    color: Colors.text.primary,
   },
   inputError: {
-    borderColor: Colors.error,
+    borderColor: Colors.danger,
   },
   errorText: {
     fontSize: 12,
-    fontFamily: Fonts.regular,
-    color: Colors.error,
+    fontFamily: Fonts.family.regular,
+    color: Colors.danger,
     marginTop: 4,
   },
   buttonContainer: {
     paddingHorizontal: 16,
     paddingVertical: 16,
     paddingBottom: Platform.OS === 'ios' ? 0 : 16,
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
     borderTopWidth: 1,
     borderTopColor: Colors.border,
   },
@@ -312,8 +312,8 @@ const styles = StyleSheet.create({
   },
   saveButtonText: {
     fontSize: 16,
-    fontFamily: Fonts.semiBold,
-    color: Colors.card,
+    fontFamily: Fonts.family.semiBold,
+    color: Colors.text.inverse,
   },
   cancelButton: {
     backgroundColor: Colors.background,
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
   },
   cancelButtonText: {
     fontSize: 16,
-    fontFamily: Fonts.semiBold,
-    color: Colors.text,
+    fontFamily: Fonts.family.semiBold,
+    color: Colors.text.primary,
   },
 });

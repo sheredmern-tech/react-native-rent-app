@@ -11,6 +11,7 @@ import { RootStackNavigationProp } from '../types';
 import { Colors, Fonts } from '../constants';
 import { PropertyCard, EmptyState } from '../components';
 import { useFavorites } from '../context/FavoritesContext';
+import { Property } from '../types';
 
 type FavoritesScreenProps = {
   navigation: RootStackNavigationProp<'Favorites'>;
@@ -31,8 +32,8 @@ export const FavoritesScreen: React.FC<FavoritesScreenProps> = ({
     }, 1000);
   };
 
-  const handlePropertyPress = (propertyId: string) => {
-    navigation.navigate('PropertyDetail', { propertyId });
+  const handlePropertyPress = (property: Property) => {
+    navigation.navigate('PropertyDetail', { property });
   };
 
   const renderHeader = () => (
@@ -66,7 +67,7 @@ export const FavoritesScreen: React.FC<FavoritesScreenProps> = ({
         renderItem={({ item, index }) => (
           <PropertyCard
             property={item}
-            onPress={() => handlePropertyPress(item.id)}
+            onPress={() => handlePropertyPress(item)}
             index={index}
           />
         )}
@@ -101,13 +102,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: Fonts.weight.bold,
+    fontFamily: Fonts.family.bold,
     color: Colors.text.primary,
     marginBottom: 8,
   },
   subtitle: {
     fontSize: Fonts.size.md,
-    fontWeight: Fonts.weight.regular,
+    fontFamily: Fonts.family.regular,
     color: Colors.text.secondary,
   },
 });
