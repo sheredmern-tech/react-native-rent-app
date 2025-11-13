@@ -83,6 +83,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
   const remainingFeaturesCount =
     (property.features?.length || 0) - visibleFeatures.length;
   const favorited = isFavorite(property.id);
+  const hasMultipleImages = property.imageUrls && property.imageUrls.length > 1;
+  const imageCount = property.imageUrls?.length || 0;
 
   return (
     <Animated.View
@@ -105,7 +107,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
           {!imageError ? (
             <>
               <Image
-                source={{ uri: property.imageUrl }}
+                source={{ uri: property.imageUrls[0] }}
                 style={styles.image}
                 resizeMode="cover"
                 onLoadStart={() => setImageLoading(true)}
@@ -172,6 +174,14 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
               />
             </Animated.View>
           </TouchableOpacity>
+
+          {/* Gallery Indicator */}
+          {hasMultipleImages && (
+            <View style={styles.galleryIndicator}>
+              <Ionicons name="images-outline" size={16} color="white" />
+              <Text style={styles.galleryIndicatorText}>+{imageCount - 1}</Text>
+            </View>
+          )}
 
           {/* Title and Location on Gradient */}
           <View style={styles.imageTextContainer}>
@@ -365,6 +375,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  galleryIndicator: {
+    position: 'absolute',
+    bottom: 52,
+    left: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  galleryIndicatorText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: '600',
   },
   imageTextContainer: {
     position: 'absolute',

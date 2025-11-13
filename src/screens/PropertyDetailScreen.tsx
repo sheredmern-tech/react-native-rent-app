@@ -1,10 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
-  Image,
   TouchableOpacity,
   Animated,
 } from 'react-native';
@@ -15,6 +14,7 @@ import { RootStackNavigationProp, RootStackRouteProp } from '../types';
 import { Colors, Fonts } from '../constants';
 import { mockProperties } from '../data';
 import { useFavorites } from '../context/FavoritesContext';
+import { ImageCarousel, ImageThumbnailGrid, ImageViewerModal } from '../components';
 
 type PropertyDetailScreenProps = {
   navigation: RootStackNavigationProp<'PropertyDetail'>;
@@ -29,6 +29,8 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
   const property = mockProperties.find((p) => p.id === propertyId);
   const { isFavorite, toggleFavorite } = useFavorites();
   const heartScaleAnim = useRef(new Animated.Value(1)).current;
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [fullscreenVisible, setFullscreenVisible] = useState(false);
 
   if (!property) {
     return (
@@ -76,21 +78,30 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
 
   const favorited = isFavorite(propertyId);
 
+  const handleImagePress = (index: number) => {
+    setCurrentImageIndex(index);
+    setFullscreenVisible(true);
+  };
+
+  const handleThumbnailPress = (index: number) => {
+    setCurrentImageIndex(index);
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {/* Header Image */}
-        <View style={styles.imageContainer}>
-          <Image
-            source={{ uri: property.imageUrl }}
-            style={styles.headerImage}
-            resizeMode="cover"
+        {/* Image Carousel */}
+        <View style={styles.carouselContainer}>
+          <ImageCarousel
+            images={property.imageUrls}
+            onImagePress={handleImagePress}
+            currentIndex={currentImageIndex}
           />
 
-          {/* Gradient Overlay */}
+          {/* Gradient Overlay for Buttons */}
           <LinearGradient
-            colors={['rgba(0,0,0,0.3)', 'transparent', 'rgba(0,0,0,0.6)']}
-            style={styles.gradientOverlay}
+            colors={['rgba(0,0,0,0.4)', 'transparent']}
+            style={styles.buttonGradient}
           />
 
           {/* Back Button */}
@@ -121,6 +132,13 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
             <Ionicons name="share-social-outline" size={24} color="white" />
           </TouchableOpacity>
         </View>
+
+        {/* Thumbnail Grid */}
+        <ImageThumbnailGrid
+          images={property.imageUrls}
+          onThumbnailPress={handleThumbnailPress}
+          selectedIndex={currentImageIndex}
+        />
 
         {/* Content Section */}
         <View style={styles.contentContainer}>
@@ -270,6 +288,14 @@ export const PropertyDetailScreen: React.FC<PropertyDetailScreenProps> = ({
           <Text style={styles.contactButtonText}>Contact Owner</Text>
         </TouchableOpacity>
       </SafeAreaView>
+
+      {/* Fullscreen Image Viewer */}
+      <ImageViewerModal
+        visible={fullscreenVisible}
+        images={property.imageUrls}
+        initialIndex={currentImageIndex}
+        onClose={() => setFullscreenVisible(false)}
+      />
     </View>
   );
 };
@@ -305,20 +331,16 @@ const styles = StyleSheet.create({
     fontSize: Fonts.size.md,
     fontWeight: Fonts.weight.semiBold,
   },
-  imageContainer: {
+  carouselContainer: {
     position: 'relative',
-    height: 350,
   },
-  headerImage: {
-    width: '100%',
-    height: '100%',
-  },
-  gradientOverlay: {
+  buttonGradient: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0,
+    height: 120,
+    pointerEvents: 'none',
   },
   backBtn: {
     position: 'absolute',
