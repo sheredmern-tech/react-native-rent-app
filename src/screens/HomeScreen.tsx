@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,15 +11,37 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackNavigationProp } from '../types';
 import { Colors, Fonts } from '../constants';
-import { PropertyCard } from '../components';
+import { PropertyCard, LoadingSpinner, EmptyState } from '../components';
 import { mockProperties } from '../data';
 
 type HomeScreenProps = {
   navigation: RootStackNavigationProp<'Home'>;
 };
 
+const getGreeting = (): string => {
+  const hour = new Date().getHours();
+
+  if (hour >= 5 && hour < 12) {
+    return 'Good Morning 🌅';
+  } else if (hour >= 12 && hour < 18) {
+    return 'Good Afternoon ☀️';
+  } else if (hour >= 18 && hour < 22) {
+    return 'Good Evening 🌆';
+  } else {
+    return 'Good Night 🌙';
+  }
+};
+
 export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Show loading spinner on initial mount
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -37,7 +59,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     <View style={styles.headerContainer}>
       <View style={styles.headerRow}>
         <View style={styles.headerTextContainer}>
-          <Text style={styles.title}>Find Your Dream Home</Text>
+          <Text style={styles.title}>{getGreeting()}</Text>
           <Text style={styles.subtitle}>
             Explore the best properties in Indonesia
           </Text>
@@ -45,6 +67,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         <TouchableOpacity
           style={styles.searchButton}
           onPress={() => navigation.navigate('Search')}
+          activeOpacity={0.7}
         >
           <Ionicons name="search-outline" size={24} color={Colors.primary} />
         </TouchableOpacity>
@@ -52,15 +75,38 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     </View>
   );
 
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container} edges={['top']}>
+        {renderHeader()}
+        <LoadingSpinner message="Loading properties..." />
+      </SafeAreaView>
+    );
+  }
+
+  if (mockProperties.length === 0) {
+    return (
+      <SafeAreaView style={styles.container} edges={['top']}>
+        {renderHeader()}
+        <EmptyState
+          icon="home-outline"
+          title="No Properties Available"
+          message="Check back later for new property listings"
+        />
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <FlatList
         data={mockProperties}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <PropertyCard
             property={item}
             onPress={() => handlePropertyPress(item.id)}
+            index={index}
           />
         )}
         ListHeaderComponent={renderHeader}
@@ -119,5 +165,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.surface,
     justifyContent: 'center',
     alignItems: 'center',
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 2,
   },
 });
