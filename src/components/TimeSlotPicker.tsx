@@ -33,9 +33,9 @@ const groupTimeSlots = (timeSlots: TimeSlot[]): TimeSlotGroup[] => {
   });
 
   return [
-    { label: 'Morning', icon: 'sunny-outline', slots: morning },
-    { label: 'Afternoon', icon: 'partly-sunny-outline', slots: afternoon },
-    { label: 'Evening', icon: 'moon-outline', slots: evening },
+    { label: 'Morning', icon: 'sunny-outline' as const, slots: morning },
+    { label: 'Afternoon', icon: 'partly-sunny-outline' as const, slots: afternoon },
+    { label: 'Evening', icon: 'moon-outline' as const, slots: evening },
   ].filter((group) => group.slots.length > 0);
 };
 

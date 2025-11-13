@@ -15,6 +15,7 @@ import { RootStackParamList, RootStackNavigationProp } from '../types/navigation
 import { Colors, Fonts } from '../constants';
 import { BookingStatusBadge } from '../components';
 import { useBookings } from '../context/BookingContext';
+import { mockProperties } from '../data';
 
 type BookingDetailScreenRouteProp = RouteProp<RootStackParamList, 'BookingDetail'>;
 
@@ -93,7 +94,10 @@ export const BookingDetailScreen: React.FC = () => {
   };
 
   const handleViewProperty = () => {
-    navigation.navigate('PropertyDetail', { propertyId: booking.propertyId });
+    const property = mockProperties.find((p) => p.id === booking.propertyId);
+    if (property) {
+      navigation.navigate('PropertyDetail', { property });
+    }
   };
 
   return (

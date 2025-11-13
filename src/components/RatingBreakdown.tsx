@@ -10,7 +10,7 @@ interface RatingBreakdownProps {
 }
 
 const STAR_COLOR = '#FFD700';
-const GRADIENT_COLORS = ['#FFD700', '#FFA500']; // Gold to Orange
+const GRADIENT_COLORS = ['#FFD700', '#FFA500'] as const; // Gold to Orange
 
 export const RatingBreakdown: React.FC<RatingBreakdownProps> = ({ stats }) => {
   const renderProgressBar = (rating: 1 | 2 | 3 | 4 | 5) => {
