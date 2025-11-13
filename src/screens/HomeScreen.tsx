@@ -28,7 +28,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   };
 
   const handlePropertyPress = (propertyId: string) => {
-    console.log('Property pressed:', propertyId);
+    navigation.navigate('PropertyDetail', { propertyId });
   };
 
   const renderHeader = () => (

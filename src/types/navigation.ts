@@ -3,7 +3,7 @@ import { RouteProp } from '@react-navigation/native';
 
 export type RootStackParamList = {
   Home: undefined;
-  // Add more screens here as needed
+  PropertyDetail: { propertyId: string };
 };
 
 export type RootStackNavigationProp<T extends keyof RootStackParamList> =
