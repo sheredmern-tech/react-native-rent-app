@@ -39,3 +39,13 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# ============================================
+# Project Specific - Script Outputs
+# ============================================
+# Collected files from scripts
+script/collected/
+
+# Old script outputs (deprecated)
+collected_files.txt
+collect-files.sh
