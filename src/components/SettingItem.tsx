@@ -2,7 +2,6 @@ import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Fonts } from '../constants';
-import { COLORS } from '../constants/colors';
 
 interface SettingItemProps {
   icon: keyof typeof Ionicons.glyphMap;
@@ -35,7 +34,7 @@ export const SettingItem: React.FC<SettingItemProps> = ({
               <Ionicons
                 name="chevron-forward"
                 size={20}
-                color={Colors.textSecondary}
+                color={Colors.text.secondary}
               />
             )}
           </>
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
@@ -80,8 +79,8 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontFamily: Fonts.medium,
-    color: COLORS.text.primary,
+    fontFamily: Fonts.family.medium,
+    color: Colors.text.primary,
   },
   rightContent: {
     flexDirection: 'row',
@@ -89,8 +88,8 @@ const styles = StyleSheet.create({
   },
   value: {
     fontSize: 14,
-    fontFamily: Fonts.regular,
-    color: Colors.textSecondary,
+    fontFamily: Fonts.family.regular,
+    color: Colors.text.secondary,
     marginRight: 8,
   },
 });

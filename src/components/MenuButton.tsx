@@ -2,7 +2,6 @@ import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Fonts } from '../constants';
-import { COLORS } from '../constants/colors';
 
 interface MenuButtonProps {
   icon: keyof typeof Ionicons.glyphMap;
@@ -16,7 +15,7 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
   icon,
   label,
   onPress,
-  color = Colors.text,
+  color = Colors.text.primary,
   showChevron = true,
 }) => {
   return (
@@ -26,14 +25,14 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
       activeOpacity={0.7}
     >
       <View style={styles.leftContent}>
-        <Ionicons name={icon} size={24} color={COLORS.text.primary} />
-        <Text style={{ color: COLORS.text.primary }}>{label}</Text>
+        <Ionicons name={icon} size={24} color={color} style={styles.icon} />
+        <Text style={[styles.label, { color }]}>{label}</Text>
       </View>
       {showChevron && (
         <Ionicons
           name="chevron-forward"
           size={20}
-          color={Colors.textSecondary}
+          color={Colors.text.secondary}
         />
       )}
     </TouchableOpacity>
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: Colors.card,
+    backgroundColor: Colors.surface,
     paddingVertical: 16,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
@@ -61,6 +60,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontFamily: Fonts.medium,
+    fontFamily: Fonts.family.medium,
+    color: Colors.text.primary,
   },
 });
