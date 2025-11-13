@@ -8,7 +8,7 @@ export interface Property {
   bedrooms: number;
   bathrooms: number;
   area: number;
-  imageUrl: string;
+  imageUrls: string[];
   description: string;
   type: 'apartment' | 'house' | 'villa';
   isAvailable: boolean;

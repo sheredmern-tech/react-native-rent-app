@@ -5,3 +5,6 @@ export { LoadingSpinner } from './LoadingSpinner';
 export { EmptyState } from './EmptyState';
 export { SortModal } from './SortModal';
 export { FilterChip } from './FilterChip';
+export { ImageCarousel } from './ImageCarousel';
+export { ImageThumbnailGrid } from './ImageThumbnailGrid';
+export { ImageViewerModal } from './ImageViewerModal';
